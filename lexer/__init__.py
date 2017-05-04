@@ -3,12 +3,16 @@ from ply import lex
 reserved = {
     'CONST': 'const',
     'DEF': 'def',
+    'DEFP': 'defp',
     'DEFMODULE': 'defmodule',
-    'DEFSTRUCT': 'defstruct',
-    'IF': 'if',
-    'WHILE': 'while',
-    'FOR': 'for',
+    'DO': 'do',
+    'END': 'end',
     'RETURN': 'return'
+
+    # 'DEFSTRUCT': 'defstruct',
+    # 'IF': 'if',
+    # 'WHILE': 'while',
+    # 'FOR': 'for',
 }
 
 for k, v in reserved.items():
@@ -56,37 +60,37 @@ def t_RBRACE(t):
     return t
 
 
+# #
+# # Block state
+# #
+# states = (
+#   ('BLOCK','exclusive'),
+# )
 #
-# Block state
+# def t_BLOCK(t):
+#     r'\{'
+#     t.lexer.code_start = t.lexer.lexpos
+#     t.lexer.level = 1
+#     t.lexer.begin('BLOCK')
+#     print(t.lexer.level)
 #
-states = (
-  ('BLOCK','exclusive'),
-)
-
-def t_BLOCK(t):
-    r'\{'
-    t.lexer.code_start = t.lexer.lexpos
-    t.lexer.level = 1
-    t.lexer.begin('BLOCK')
-    print(t.lexer.level)
-
-def t_BLOCK_LBRACE(t):
-    r'\{'
-    t.lexer.level += 1
-
-def t_BLOCK_RBRACE(t):
-    r'\}'
-    t.lexer.level -= 1
-
-    if(t.lexer.level == 0):
-        t.value = t.lexer.lexdata[t.lexer.code_start:t.lexer.lexpos+1]
-        t.type = "BLOCK"
-        t.lexer.lineno += t.value.count('\n')
-        t.lexer.begin('INITIAL')
-        return t
-
-t_BLOCK_ignore = ' \t\n'
-
+# def t_BLOCK_LBRACE(t):
+#     r'\{'
+#     t.lexer.level += 1
+#
+# def t_BLOCK_RBRACE(t):
+#     r'\}'
+#     t.lexer.level -= 1
+#
+#     if(t.lexer.level == 0):
+#         t.value = t.lexer.lexdata[t.lexer.code_start:t.lexer.lexpos+1]
+#         t.type = "BLOCK"
+#         t.lexer.lineno += t.value.count('\n')
+#         t.lexer.begin('INITIAL')
+#         return t
+#
+# t_BLOCK_ignore = ' \t\n'
+#
 def t_error(t):
     print("Illegal character '%s'" % t.value[0])
     t.lexer.skip(1)

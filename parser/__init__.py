@@ -1,5 +1,5 @@
 from ply import yacc
-from lexer import lex, tokens
+from lexer import tokens, literals
 
 precedence = (
     ('left', '+', '-'),
@@ -7,126 +7,112 @@ precedence = (
     ('left', 'DEF')
 )
 
-def p_module(p):
-    ''' program : statements
-                | program statements'''
-    if(len(p) > 2):
-        p[0] = p[1], p[2]
-    else:
+start = 'modules'
+
+def p_empty(p):
+    ''' empty : '''
+    pass
+
+def p_modules(p):
+    ''' modules : module
+                | modules module '''
+    if(len(p) == 2):
         p[0] = p[1]
+    else:
+        p[0] = ('MODULES', p[1], p[2])
+
+def p_module(p):
+    ''' module : DEFMODULE ID do_block '''
+    p[0] = ('MODULE', p[2], p[3])
 
 def p_statements(p):
     ''' statements : statement
                    | statements statement '''
-    if(len(p) > 2):
-        p[0] = p[1], p[2]
-    else:
-        p[0] = p[1]
-
-def p_statement(p):
-    ''' statement : func_def
-                  | assign ';'
-                  | expr ';' '''
     p[0] = p[1]
 
-def p_func_def(p):
-    ''' func_def : DEF ID '(' argument_list ')' block '''
-    p[0] = ('FUNC_DEF', p[2], ('ARGS', p[4]), p[6])
+def p_statement(p):
+    ''' statement : assignment
+                  | function_definition
+                  | private_function_definition
+                  | do_block '''
 
-def p_block_empty(p):
-    ''' block : '{' '}' '''
-    p[0] = ('BLOCK', ())
-def p_block(p):
-    ''' block : '{' statements '}' '''
-    p[0] = ('BLOCK', p[2])
-def p_block_return(p):
-    ''' block : '{' statements RETURN expr ';' '}' '''
-    p[0] = ('BLOCK', p[2] + ('RETURN', p[4]))
-def p_block_immidiate_return(p):
-    ''' block : '{' RETURN expr ';' '}' '''
-    p[0] = ('BLOCK', ('RETURN', p[3]))
+    p[0] = p[1]
 
-def p_argument(p):
-    ''' argument      : expr
-                      | default_assign '''
+    # TODO:
+    # | function_call
+    # | struct_definition
+
+def p_assignment_qualifier(p):
+    ''' assignment_qualifier : CONST '''
+    p[0] = p[1]
+
+def p_assignment(p):
+    ''' assignment : ID '=' expression
+                   | assignment_qualifier ID '=' expression '''
+    if(len(p) == 4):
+        p[0] = ('ASSIGN', p[1], p[3])
+    else:
+        print(list(p))
+        p[0] = (p[1].upper() + '_ASSIGN', p[2], p[4])
+
+def p_function_definition(p):
+    ''' function_definition : DEF ID '(' def_argument_list ')' do_block '''
+    p[0] = ('FUNC_DEF', p[2], p[4], p[6])
+
+def p_private_function_definition(p):
+    ''' private_function_definition : DEFP ID '(' def_argument_list ')' do_block '''
+    p[0] = ('PRIV_FUNC_DEF', p[2], p[4], p[6])
+
+def p_function_def_argument(p):
+    ''' def_argument : ID
+                     | assignment '''
     p[0] = ('ARG', p[1])
 
-def p_argument_list(p):
-    ''' argument_list : argument
-                      | argument ',' argument_list '''
+def p_function_def_argument_list_empty(p):
+    ''' def_argument_list : empty '''
+
+def p_function_def_argument_list(p):
+    ''' def_argument_list : def_argument
+                          | def_argument_list ',' def_argument '''
+    p[0] = ('ARGS', p[1])
+
+def p_do_block_empty(p):
+    ''' do_block : DO END '''
+
+def p_do_return(p):
+    ''' do_return : RETURN
+                  | '' '''
+
+def p_do_block(p):
+    ''' do_block : DO statements END '''
+    p[0] = ('DO_BLOCK', p[2])
+
+def p_do_block_return(p):
+    ''' do_block : DO statements do_return expression END '''
+    p[0] = ('DO_BLOCK', p[2], ('RETURN', p[4]))
+
+def p_do_block_return_immediate(p):
+    ''' do_block : DO do_return expression END '''
+    p[0] = ('DO_BLOCK', ('RETURN', p[3]))
+
+def p_binary_expression(p):
+    ''' expression : constant
+                   | expression '+' constant
+                   | expression '-' constant
+                   | expression '*' constant
+                   | expression '/' constant
+                   | expression '^' constant
+                   | expression '%' constant '''
     if(len(p) == 2):
         p[0] = p[1]
     else:
-        p[0] = (p[1], p[3])
+        p[0] = (p[2], p[1], p[3])
 
-def p_function_argument(p):
-    ''' function_argument : expr '''
-    p[0] = ('ARG', p[1])
-
-def p_function_argument_list(p):
-    ''' function_argument_list : function_argument
-                               | function_argument ',' function_argument_list '''
-    if(len(p) == 2):
-        p[0] = p[1]
-    else:
-        p[0] = (p[1], p[3])
-
-def p_assign_with_qualifier(p):
-    ''' assign : CONST ID '=' expr '''
-    p[0] = ('CONST_ASSIGN', p[2], p[4])
-
-def p_assign(p):
-    ''' assign : ID '=' expr '''
-    p[0] = ('ASSIGN', p[1], p[3])
-
-def p_default_assign(p):
-    ''' default_assign : ID '=' expr '''
-    p[0] = ('DEFAULT_ASSIGN', p[1], p[3])
-
-def p_expression(p):
-    ''' expr : term
-             | expr '+' term
-             | expr '-' term '''
-
-    if(len(p) == 4):
-        if(p[2] == '+'):
-            p[0] = ('ADD', p[1], p[3])
-        else:
-            p[0] = ('SUB', p[1], p[3])
-    else:
-        p[0] = p[1]
-
-def p_term(p):
-    ''' term : factor
-             | term '*' factor
-             | term '/' factor
-             | term '^' factor '''
-    if(len(p) == 4):
-        if(p[2] == '*'):
-            p[0] = ('MULT', p[1], p[3])
-        elif(p[2] == '/'):
-            p[0] = ('DIV', p[1], p[3])
-        else:
-            p[0] = ('PWR', p[1], p[3])
-    else:
-        p[0] = p[1]
-
-def p_factor_constant(p):
-    ''' factor : NUMBER
-               | STRING
-               | func_call '''
-    p[0] = ('CONST', p[1])
-
-def p_factor_variable(p):
-    ''' factor : ID '''
-    p[0] = ('VAR', p[1])
-
-def p_factor_expr(p):
-    ''' factor : '(' expr ')' '''
-    p[0] = ('EXPR', p[2])
-
-def p_func_call(p):
-    ''' func_call : ID '(' function_argument_list ')' '''
-    p[0] = ('FUNC_CALL', p[1], ('ARGS', p[3]))
+def p_constant(p):
+    ''' constant : ID
+                 | NUMBER
+                 | STRING
+                 | '(' expression ')' '''
+    p[0] = p[1]
 
 yacc.yacc()

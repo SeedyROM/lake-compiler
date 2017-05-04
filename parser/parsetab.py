@@ -5,9 +5,9 @@ _tabversion = '3.10'
 
 _lr_method = 'LALR'
 
-_lr_signature = "left+-left/*leftDEFID STRING NUMBER IF WHILE RETURN CONST DEF FOR DEFSTRUCT DEFMODULE program : statements\n                | program statements statements : statement\n                   | statements statement  statement : func_def\n                  | assign ';'\n                  | expr ';'  func_def : DEF ID '(' argument_list ')' block  block : '{' '}'  block : '{' statements '}'  block : '{' statements RETURN expr ';' '}'  block : '{' RETURN expr ';' '}'  argument      : expr\n                      | default_assign  argument_list : argument\n                      | argument ',' argument_list  function_argument : expr  function_argument_list : function_argument\n                               | function_argument ',' function_argument_list  assign : CONST ID '=' expr  assign : ID '=' expr  default_assign : ID '=' expr  expr : term\n             | expr '+' term\n             | expr '-' term  term : factor\n             | term '*' factor\n             | term '/' factor\n             | term '^' factor  factor : NUMBER\n               | STRING\n               | func_call  factor : ID  factor : '(' expr ')'  func_call : ID '(' function_argument_list ')' "
+_lr_signature = "modulesleft+-left/*leftDEFID STRING NUMBER DO RETURN CONST DEF END DEFMODULE DEFP empty :  modules : module\n                | modules module  module : DEFMODULE ID do_block  statements : statement\n                   | statements statement  statement : assignment\n                  | function_definition\n                  | private_function_definition\n                  | do_block  assignment_qualifier : CONST  assignment : ID '=' expression\n                   | assignment_qualifier ID '=' expression  function_definition : DEF ID '(' def_argument_list ')' do_block  private_function_definition : DEFP ID '(' def_argument_list ')' do_block  def_argument : ID\n                     | assignment  def_argument_list : empty  def_argument_list : def_argument\n                          | def_argument_list ',' def_argument  do_block : DO END  do_return : RETURN\n                  | ''  do_block : DO statements END  do_block : DO statements do_return expression END  do_block : DO do_return expression END  expression : constant\n                   | expression '+' constant\n                   | expression '-' constant\n                   | expression '*' constant\n                   | expression '/' constant\n                   | expression '^' constant\n                   | expression '%' constant  constant : ID\n                 | NUMBER\n                 | STRING\n                 | '(' expression ')' "
     
-_lr_action_items = {'=':([15,22,48,],[29,35,53,]),'(':([0,1,2,6,9,10,15,17,18,19,20,21,23,24,25,26,27,28,29,30,35,38,48,49,51,53,56,57,59,60,61,62,63,68,69,],[2,-3,2,2,-5,2,30,30,2,2,2,2,2,-7,2,-4,38,-6,2,2,2,2,30,2,2,2,-8,2,-9,2,2,-10,2,-12,-11,]),'NUMBER':([0,1,2,6,9,10,18,19,20,21,23,24,25,26,28,29,30,35,38,49,51,53,56,57,59,60,61,62,63,68,69,],[3,-3,3,3,-5,3,3,3,3,3,3,-7,3,-4,-6,3,3,3,3,3,3,3,-8,3,-9,3,3,-10,3,-12,-11,]),'CONST':([0,1,6,9,10,21,24,26,28,56,57,59,60,62,68,69,],[7,-3,7,-5,7,7,-7,-4,-6,-8,7,-9,7,-10,-12,-11,]),'$end':([1,6,9,10,21,24,26,28,56,59,62,68,69,],[-3,0,-5,-1,-2,-7,-4,-6,-8,-9,-10,-12,-11,]),'}':([1,9,24,26,28,56,57,59,60,62,66,67,68,69,],[-3,-5,-7,-4,-6,-8,59,-9,62,-10,68,69,-12,-11,]),'{':([52,],[57,]),'*':([3,4,5,11,14,15,17,31,32,33,34,36,37,48,50,],[-30,-26,18,-31,-32,-33,-33,-34,-27,-29,-28,18,18,-33,-35,]),'+':([3,4,5,8,11,14,15,16,17,31,32,33,34,36,37,39,40,43,47,48,50,58,64,65,],[-30,-26,-23,23,-31,-32,-33,23,-33,-34,-27,-29,-28,-24,-25,23,23,23,23,-33,-35,23,23,23,]),'^':([3,4,5,11,14,15,17,31,32,33,34,36,37,48,50,],[-30,-26,19,-31,-32,-33,-33,-34,-27,-29,-28,19,19,-33,-35,]),';':([3,4,5,8,11,13,14,15,17,31,32,33,34,36,37,39,43,50,64,65,],[-30,-26,-23,24,-31,28,-32,-33,-33,-34,-27,-29,-28,-24,-25,-21,-20,-35,66,67,]),'STRING':([0,1,2,6,9,10,18,19,20,21,23,24,25,26,28,29,30,35,38,49,51,53,56,57,59,60,61,62,63,68,69,],[11,-3,11,11,-5,11,11,11,11,11,11,-7,11,-4,-6,11,11,11,11,11,11,11,-8,11,-9,11,11,-10,11,-12,-11,]),',':([3,4,5,11,14,17,31,32,33,34,36,37,40,41,44,45,47,48,50,58,],[-30,-26,-23,-31,-32,-33,-34,-27,-29,-28,-24,-25,-17,49,-14,51,-13,-33,-35,-22,]),'RETURN':([1,9,24,26,28,56,57,59,60,62,68,69,],[-3,-5,-7,-4,-6,-8,61,-9,63,-10,-12,-11,]),'DEF':([0,1,6,9,10,21,24,26,28,56,57,59,60,62,68,69,],[12,-3,12,-5,12,12,-7,-4,-6,-8,12,-9,12,-10,-12,-11,]),')':([3,4,5,11,14,16,17,31,32,33,34,36,37,40,41,42,44,45,46,47,48,50,54,55,58,],[-30,-26,-23,-31,-32,31,-33,-34,-27,-29,-28,-24,-25,-17,-18,50,-14,-15,52,-13,-33,-35,-19,-16,-22,]),'-':([3,4,5,8,11,14,15,16,17,31,32,33,34,36,37,39,40,43,47,48,50,58,64,65,],[-30,-26,-23,25,-31,-32,-33,25,-33,-34,-27,-29,-28,-24,-25,25,25,25,25,-33,-35,25,25,25,]),'ID':([0,1,2,6,7,9,10,12,18,19,20,21,23,24,25,26,28,29,30,35,38,49,51,53,56,57,59,60,61,62,63,68,69,],[15,-3,17,15,22,-5,15,27,17,17,17,15,17,-7,17,-4,-6,17,17,17,48,17,48,17,-8,15,-9,15,17,-10,17,-12,-11,]),'/':([3,4,5,11,14,15,17,31,32,33,34,36,37,48,50,],[-30,-26,20,-31,-32,-33,-33,-34,-27,-29,-28,20,20,-33,-35,]),}
+_lr_action_items = {'':([6,10,11,14,17,18,20,21,24,25,26,28,30,31,40,45,49,50,51,52,53,54,55,56,57,67,69,],[8,-8,8,-7,-5,-9,-21,-10,-6,-24,-36,-35,-34,-27,-26,-12,-25,-30,-32,-33,-31,-29,-28,-37,-13,-15,-14,]),'DO':([5,6,10,11,14,17,18,20,21,24,25,26,28,30,31,40,45,49,50,51,52,53,54,55,56,57,64,66,67,69,],[6,6,-8,6,-7,-5,-9,-21,-10,-6,-24,-36,-35,-34,-27,-26,-12,-25,-30,-32,-33,-31,-29,-28,-37,-13,6,6,-15,-14,]),'RETURN':([6,10,11,14,17,18,20,21,24,25,26,28,30,31,40,45,49,50,51,52,53,54,55,56,57,67,69,],[9,-8,9,-7,-5,-9,-21,-10,-6,-24,-36,-35,-34,-27,-26,-12,-25,-30,-32,-33,-31,-29,-28,-37,-13,-15,-14,]),'$end':([1,2,4,7,20,25,40,49,],[-2,0,-3,-4,-21,-24,-26,-25,]),'/':([26,27,28,30,31,36,44,45,50,51,52,53,54,55,56,57,],[-36,41,-35,-34,-27,41,41,41,-30,-32,-33,-31,-29,-28,-37,41,]),'^':([26,27,28,30,31,36,44,45,50,51,52,53,54,55,56,57,],[-36,38,-35,-34,-27,38,38,38,-30,-32,-33,-31,-29,-28,-37,38,]),'(':([8,9,12,23,29,32,34,35,37,38,39,41,42,43,46,],[-23,-22,29,29,29,29,47,48,29,29,29,29,29,29,29,]),'DEF':([6,10,11,14,17,18,20,21,24,25,26,28,30,31,40,45,49,50,51,52,53,54,55,56,57,67,69,],[22,-8,22,-7,-5,-9,-21,-10,-6,-24,-36,-35,-34,-27,-26,-12,-25,-30,-32,-33,-31,-29,-28,-37,-13,-15,-14,]),',':([26,28,30,31,45,47,48,50,51,52,53,54,55,56,57,58,59,60,61,62,63,68,],[-36,-35,-34,-27,-12,-1,-1,-30,-32,-33,-31,-29,-28,-37,-13,65,-18,-19,-16,-17,65,-20,]),'%':([26,27,28,30,31,36,44,45,50,51,52,53,54,55,56,57,],[-36,39,-35,-34,-27,39,39,39,-30,-32,-33,-31,-29,-28,-37,39,]),'DEFMODULE':([0,1,2,4,7,20,25,40,49,],[3,-2,3,-3,-4,-21,-24,-26,-25,]),'+':([26,27,28,30,31,36,44,45,50,51,52,53,54,55,56,57,],[-36,43,-35,-34,-27,43,43,43,-30,-32,-33,-31,-29,-28,-37,43,]),'*':([26,27,28,30,31,36,44,45,50,51,52,53,54,55,56,57,],[-36,37,-35,-34,-27,37,37,37,-30,-32,-33,-31,-29,-28,-37,37,]),'CONST':([6,10,11,14,17,18,20,21,24,25,26,28,30,31,40,45,47,48,49,50,51,52,53,54,55,56,57,65,67,69,],[13,-8,13,-7,-5,-9,-21,-10,-6,-24,-36,-35,-34,-27,-26,-12,13,13,-25,-30,-32,-33,-31,-29,-28,-37,-13,13,-15,-14,]),'STRING':([8,9,12,23,29,32,37,38,39,41,42,43,46,],[-23,-22,26,26,26,26,26,26,26,26,26,26,26,]),'=':([15,33,61,],[32,46,32,]),')':([26,28,30,31,44,45,47,48,50,51,52,53,54,55,56,57,58,59,60,61,62,63,68,],[-36,-35,-34,-27,56,-12,-1,-1,-30,-32,-33,-31,-29,-28,-37,-13,64,-18,-19,-16,-17,66,-20,]),'ID':([3,6,8,9,10,11,12,13,14,16,17,18,19,20,21,22,23,24,25,26,28,29,30,31,32,37,38,39,40,41,42,43,45,46,47,48,49,50,51,52,53,54,55,56,57,65,67,69,],[5,15,-23,-22,-8,15,30,-11,-7,33,-5,-9,34,-21,-10,35,30,-6,-24,-36,-35,30,-34,-27,30,30,30,30,-26,30,30,30,-12,30,61,61,-25,-30,-32,-33,-31,-29,-28,-37,-13,61,-15,-14,]),'END':([6,10,11,14,17,18,20,21,24,25,26,27,28,30,31,36,40,45,49,50,51,52,53,54,55,56,57,67,69,],[20,-8,25,-7,-5,-9,-21,-10,-6,-24,-36,40,-35,-34,-27,49,-26,-12,-25,-30,-32,-33,-31,-29,-28,-37,-13,-15,-14,]),'-':([26,27,28,30,31,36,44,45,50,51,52,53,54,55,56,57,],[-36,42,-35,-34,-27,42,42,42,-30,-32,-33,-31,-29,-28,-37,42,]),'NUMBER':([8,9,12,23,29,32,37,38,39,41,42,43,46,],[-23,-22,28,28,28,28,28,28,28,28,28,28,28,]),'DEFP':([6,10,11,14,17,18,20,21,24,25,26,28,30,31,40,45,49,50,51,52,53,54,55,56,57,67,69,],[19,-8,19,-7,-5,-9,-21,-10,-6,-24,-36,-35,-34,-27,-26,-12,-25,-30,-32,-33,-31,-29,-28,-37,-13,-15,-14,]),}
 
 _lr_action = {}
 for _k, _v in _lr_action_items.items():
@@ -16,7 +16,7 @@ for _k, _v in _lr_action_items.items():
       _lr_action[_x][_k] = _y
 del _lr_action_items
 
-_lr_goto_items = {'statement':([0,6,10,21,57,60,],[1,1,26,26,1,26,]),'default_assign':([38,51,],[44,44,]),'block':([52,],[56,]),'func_def':([0,6,10,21,57,60,],[9,9,9,9,9,9,]),'expr':([0,2,6,10,21,29,30,35,38,49,51,53,57,60,61,63,],[8,16,8,8,8,39,40,43,47,40,47,58,8,8,64,65,]),'factor':([0,2,6,10,18,19,20,21,23,25,29,30,35,38,49,51,53,57,60,61,63,],[4,4,4,4,32,33,34,4,4,4,4,4,4,4,4,4,4,4,4,4,4,]),'term':([0,2,6,10,21,23,25,29,30,35,38,49,51,53,57,60,61,63,],[5,5,5,5,5,36,37,5,5,5,5,5,5,5,5,5,5,5,]),'program':([0,],[6,]),'argument_list':([38,51,],[46,55,]),'function_argument':([30,49,],[41,41,]),'statements':([0,6,57,],[10,21,60,]),'argument':([38,51,],[45,45,]),'function_argument_list':([30,49,],[42,54,]),'assign':([0,6,10,21,57,60,],[13,13,13,13,13,13,]),'func_call':([0,2,6,10,18,19,20,21,23,25,29,30,35,38,49,51,53,57,60,61,63,],[14,14,14,14,14,14,14,14,14,14,14,14,14,14,14,14,14,14,14,14,14,]),}
+_lr_goto_items = {'def_argument_list':([47,48,],[58,63,]),'empty':([47,48,],[59,59,]),'function_definition':([6,11,],[10,10,]),'statements':([6,],[11,]),'do_return':([6,11,],[12,23,]),'assignment':([6,11,47,48,65,],[14,14,62,62,62,]),'def_argument':([47,48,65,],[60,60,68,]),'expression':([12,23,29,32,46,],[27,36,44,45,57,]),'modules':([0,],[2,]),'assignment_qualifier':([6,11,47,48,65,],[16,16,16,16,16,]),'statement':([6,11,],[17,24,]),'private_function_definition':([6,11,],[18,18,]),'module':([0,2,],[1,4,]),'constant':([12,23,29,32,37,38,39,41,42,43,46,],[31,31,31,31,50,51,52,53,54,55,31,]),'do_block':([5,6,11,64,66,],[7,21,21,67,69,]),}
 
 _lr_goto = {}
 for _k, _v in _lr_goto_items.items():
@@ -25,40 +25,42 @@ for _k, _v in _lr_goto_items.items():
        _lr_goto[_x][_k] = _y
 del _lr_goto_items
 _lr_productions = [
-  ("S' -> program","S'",1,None,None,None),
-  ('program -> statements','program',1,'p_module','__init__.py',11),
-  ('program -> program statements','program',2,'p_module','__init__.py',12),
-  ('statements -> statement','statements',1,'p_statements','__init__.py',19),
-  ('statements -> statements statement','statements',2,'p_statements','__init__.py',20),
-  ('statement -> func_def','statement',1,'p_statement','__init__.py',27),
-  ('statement -> assign ;','statement',2,'p_statement','__init__.py',28),
-  ('statement -> expr ;','statement',2,'p_statement','__init__.py',29),
-  ('func_def -> DEF ID ( argument_list ) block','func_def',6,'p_func_def','__init__.py',33),
-  ('block -> { }','block',2,'p_block_empty','__init__.py',37),
-  ('block -> { statements }','block',3,'p_block','__init__.py',40),
-  ('block -> { statements RETURN expr ; }','block',6,'p_block_return','__init__.py',43),
-  ('block -> { RETURN expr ; }','block',5,'p_block_immidiate_return','__init__.py',46),
-  ('argument -> expr','argument',1,'p_argument','__init__.py',50),
-  ('argument -> default_assign','argument',1,'p_argument','__init__.py',51),
-  ('argument_list -> argument','argument_list',1,'p_argument_list','__init__.py',55),
-  ('argument_list -> argument , argument_list','argument_list',3,'p_argument_list','__init__.py',56),
-  ('function_argument -> expr','function_argument',1,'p_function_argument','__init__.py',63),
-  ('function_argument_list -> function_argument','function_argument_list',1,'p_function_argument_list','__init__.py',67),
-  ('function_argument_list -> function_argument , function_argument_list','function_argument_list',3,'p_function_argument_list','__init__.py',68),
-  ('assign -> CONST ID = expr','assign',4,'p_assign_with_qualifier','__init__.py',75),
-  ('assign -> ID = expr','assign',3,'p_assign','__init__.py',79),
-  ('default_assign -> ID = expr','default_assign',3,'p_default_assign','__init__.py',83),
-  ('expr -> term','expr',1,'p_expression','__init__.py',87),
-  ('expr -> expr + term','expr',3,'p_expression','__init__.py',88),
-  ('expr -> expr - term','expr',3,'p_expression','__init__.py',89),
-  ('term -> factor','term',1,'p_term','__init__.py',100),
-  ('term -> term * factor','term',3,'p_term','__init__.py',101),
-  ('term -> term / factor','term',3,'p_term','__init__.py',102),
-  ('term -> term ^ factor','term',3,'p_term','__init__.py',103),
-  ('factor -> NUMBER','factor',1,'p_factor_constant','__init__.py',115),
-  ('factor -> STRING','factor',1,'p_factor_constant','__init__.py',116),
-  ('factor -> func_call','factor',1,'p_factor_constant','__init__.py',117),
-  ('factor -> ID','factor',1,'p_factor_variable','__init__.py',121),
-  ('factor -> ( expr )','factor',3,'p_factor_expr','__init__.py',125),
-  ('func_call -> ID ( function_argument_list )','func_call',4,'p_func_call','__init__.py',129),
+  ("S' -> modules","S'",1,None,None,None),
+  ('empty -> <empty>','empty',0,'p_empty','__init__.py',13),
+  ('modules -> module','modules',1,'p_modules','__init__.py',17),
+  ('modules -> modules module','modules',2,'p_modules','__init__.py',18),
+  ('module -> DEFMODULE ID do_block','module',3,'p_module','__init__.py',25),
+  ('statements -> statement','statements',1,'p_statements','__init__.py',29),
+  ('statements -> statements statement','statements',2,'p_statements','__init__.py',30),
+  ('statement -> assignment','statement',1,'p_statement','__init__.py',34),
+  ('statement -> function_definition','statement',1,'p_statement','__init__.py',35),
+  ('statement -> private_function_definition','statement',1,'p_statement','__init__.py',36),
+  ('statement -> do_block','statement',1,'p_statement','__init__.py',37),
+  ('assignment_qualifier -> CONST','assignment_qualifier',1,'p_assignment_qualifier','__init__.py',46),
+  ('assignment -> ID = expression','assignment',3,'p_assignment','__init__.py',50),
+  ('assignment -> assignment_qualifier ID = expression','assignment',4,'p_assignment','__init__.py',51),
+  ('function_definition -> DEF ID ( def_argument_list ) do_block','function_definition',6,'p_function_definition','__init__.py',59),
+  ('private_function_definition -> DEFP ID ( def_argument_list ) do_block','private_function_definition',6,'p_private_function_definition','__init__.py',63),
+  ('def_argument -> ID','def_argument',1,'p_function_def_argument','__init__.py',67),
+  ('def_argument -> assignment','def_argument',1,'p_function_def_argument','__init__.py',68),
+  ('def_argument_list -> empty','def_argument_list',1,'p_function_def_argument_list_empty','__init__.py',72),
+  ('def_argument_list -> def_argument','def_argument_list',1,'p_function_def_argument_list','__init__.py',75),
+  ('def_argument_list -> def_argument_list , def_argument','def_argument_list',3,'p_function_def_argument_list','__init__.py',76),
+  ('do_block -> DO END','do_block',2,'p_do_block_empty','__init__.py',80),
+  ('do_return -> RETURN','do_return',1,'p_do_return','__init__.py',83),
+  ('do_return -> ','do_return',1,'p_do_return','__init__.py',84),
+  ('do_block -> DO statements END','do_block',3,'p_do_block','__init__.py',87),
+  ('do_block -> DO statements do_return expression END','do_block',5,'p_do_block_return','__init__.py',91),
+  ('do_block -> DO do_return expression END','do_block',4,'p_do_block_return_immediate','__init__.py',95),
+  ('expression -> constant','expression',1,'p_binary_expression','__init__.py',99),
+  ('expression -> expression + constant','expression',3,'p_binary_expression','__init__.py',100),
+  ('expression -> expression - constant','expression',3,'p_binary_expression','__init__.py',101),
+  ('expression -> expression * constant','expression',3,'p_binary_expression','__init__.py',102),
+  ('expression -> expression / constant','expression',3,'p_binary_expression','__init__.py',103),
+  ('expression -> expression ^ constant','expression',3,'p_binary_expression','__init__.py',104),
+  ('expression -> expression % constant','expression',3,'p_binary_expression','__init__.py',105),
+  ('constant -> ID','constant',1,'p_constant','__init__.py',112),
+  ('constant -> NUMBER','constant',1,'p_constant','__init__.py',113),
+  ('constant -> STRING','constant',1,'p_constant','__init__.py',114),
+  ('constant -> ( expression )','constant',3,'p_constant','__init__.py',115),
 ]

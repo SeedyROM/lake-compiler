@@ -3,12 +3,19 @@
 from parser import yacc
 
 testScript = '''
-def hey(hello, hahaha) {
-    x = 15 * hello;
-    return x;
-}
+defmodule MyModule do
+    const name = "Zack"
+    def func(x) do
+        x = 15
+    end
 
-hey(20, "FUCK");
+    defp _hiddenFunc() do
+        return false
+    end
+end
+defmodule Test do
+    const tester = 2.43
+end
 '''
 
 tree = yacc.parse(testScript)
