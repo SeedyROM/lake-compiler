@@ -108,8 +108,8 @@ state 0
 
     DEFMODULE       shift and go to state 1
 
-    module                         shift and go to state 2
-    modules                        shift and go to state 3
+    modules                        shift and go to state 2
+    module                         shift and go to state 3
 
 state 1
 
@@ -120,14 +120,6 @@ state 1
 
 state 2
 
-    (2) modules -> module .
-
-    DEFMODULE       reduce using rule 2 (modules -> module .)
-    $end            reduce using rule 2 (modules -> module .)
-
-
-state 3
-
     (0) S' -> modules .
     (3) modules -> modules . module
     (4) module -> . DEFMODULE ID do_block
@@ -135,6 +127,14 @@ state 3
     DEFMODULE       shift and go to state 1
 
     module                         shift and go to state 5
+
+state 3
+
+    (2) modules -> module .
+
+    DEFMODULE       reduce using rule 2 (modules -> module .)
+    $end            reduce using rule 2 (modules -> module .)
+
 
 state 4
 
@@ -195,30 +195,30 @@ state 6
     (41) constant -> . ( expression )
     (42) function_call -> . ID ( argument_list )
 
-    END             shift and go to state 13
-    RETURN          shift and go to state 16
+    END             shift and go to state 18
+    RETURN          shift and go to state 11
                     shift and go to state 8
-    ID              shift and go to state 14
-    DEF             shift and go to state 11
-    DEFP            shift and go to state 20
+    ID              shift and go to state 13
+    DEF             shift and go to state 21
+    DEFP            shift and go to state 12
     DO              shift and go to state 6
-    CONST           shift and go to state 9
-    MUT             shift and go to state 18
-    NUMBER          shift and go to state 28
-    STRING          shift and go to state 12
-    (               shift and go to state 22
+    CONST           shift and go to state 25
+    MUT             shift and go to state 26
+    NUMBER          shift and go to state 16
+    STRING          shift and go to state 19
+    (               shift and go to state 28
 
-    function_call                  shift and go to state 17
-    private_function_definition    shift and go to state 19
-    assignment_qualifier           shift and go to state 21
-    constant                       shift and go to state 23
-    function_definition            shift and go to state 24
-    assignment                     shift and go to state 25
-    statements                     shift and go to state 26
-    do_return                      shift and go to state 27
-    expression                     shift and go to state 15
-    do_block                       shift and go to state 10
-    statement                      shift and go to state 29
+    function_definition            shift and go to state 9
+    expression                     shift and go to state 22
+    assignment                     shift and go to state 23
+    private_function_definition    shift and go to state 14
+    statement                      shift and go to state 15
+    constant                       shift and go to state 10
+    do_return                      shift and go to state 17
+    statements                     shift and go to state 27
+    function_call                  shift and go to state 20
+    assignment_qualifier           shift and go to state 24
+    do_block                       shift and go to state 29
 
 state 7
 
@@ -240,63 +240,184 @@ state 8
 
 state 9
 
-    (12) assignment_qualifier -> CONST .
+    (8) statement -> function_definition .
 
-    ID              reduce using rule 12 (assignment_qualifier -> CONST .)
+    END             reduce using rule 8 (statement -> function_definition .)
+    RETURN          reduce using rule 8 (statement -> function_definition .)
+                    reduce using rule 8 (statement -> function_definition .)
+    ID              reduce using rule 8 (statement -> function_definition .)
+    DEF             reduce using rule 8 (statement -> function_definition .)
+    DEFP            reduce using rule 8 (statement -> function_definition .)
+    DO              reduce using rule 8 (statement -> function_definition .)
+    CONST           reduce using rule 8 (statement -> function_definition .)
+    MUT             reduce using rule 8 (statement -> function_definition .)
+    NUMBER          reduce using rule 8 (statement -> function_definition .)
+    STRING          reduce using rule 8 (statement -> function_definition .)
+    (               reduce using rule 8 (statement -> function_definition .)
 
 
 state 10
 
-    (10) statement -> do_block .
+    (30) expression -> constant .
 
-    END             reduce using rule 10 (statement -> do_block .)
-    RETURN          reduce using rule 10 (statement -> do_block .)
-                    reduce using rule 10 (statement -> do_block .)
-    ID              reduce using rule 10 (statement -> do_block .)
-    DEF             reduce using rule 10 (statement -> do_block .)
-    DEFP            reduce using rule 10 (statement -> do_block .)
-    DO              reduce using rule 10 (statement -> do_block .)
-    CONST           reduce using rule 10 (statement -> do_block .)
-    MUT             reduce using rule 10 (statement -> do_block .)
-    NUMBER          reduce using rule 10 (statement -> do_block .)
-    STRING          reduce using rule 10 (statement -> do_block .)
-    (               reduce using rule 10 (statement -> do_block .)
+    +               reduce using rule 30 (expression -> constant .)
+    -               reduce using rule 30 (expression -> constant .)
+    *               reduce using rule 30 (expression -> constant .)
+    /               reduce using rule 30 (expression -> constant .)
+    ^               reduce using rule 30 (expression -> constant .)
+    %               reduce using rule 30 (expression -> constant .)
+    END             reduce using rule 30 (expression -> constant .)
+    RETURN          reduce using rule 30 (expression -> constant .)
+                    reduce using rule 30 (expression -> constant .)
+    ID              reduce using rule 30 (expression -> constant .)
+    DEF             reduce using rule 30 (expression -> constant .)
+    DEFP            reduce using rule 30 (expression -> constant .)
+    DO              reduce using rule 30 (expression -> constant .)
+    CONST           reduce using rule 30 (expression -> constant .)
+    MUT             reduce using rule 30 (expression -> constant .)
+    NUMBER          reduce using rule 30 (expression -> constant .)
+    STRING          reduce using rule 30 (expression -> constant .)
+    (               reduce using rule 30 (expression -> constant .)
+    )               reduce using rule 30 (expression -> constant .)
+    ,               reduce using rule 30 (expression -> constant .)
 
 
 state 11
 
-    (16) function_definition -> DEF . ID ( def_argument_list ) do_block
+    (25) do_return -> RETURN .
 
-    ID              shift and go to state 30
+    NUMBER          reduce using rule 25 (do_return -> RETURN .)
+    STRING          reduce using rule 25 (do_return -> RETURN .)
+    ID              reduce using rule 25 (do_return -> RETURN .)
+    (               reduce using rule 25 (do_return -> RETURN .)
 
 
 state 12
 
-    (38) constant -> STRING .
+    (17) private_function_definition -> DEFP . ID ( def_argument_list ) do_block
 
-    END             reduce using rule 38 (constant -> STRING .)
-    +               reduce using rule 38 (constant -> STRING .)
-    -               reduce using rule 38 (constant -> STRING .)
-    *               reduce using rule 38 (constant -> STRING .)
-    /               reduce using rule 38 (constant -> STRING .)
-    ^               reduce using rule 38 (constant -> STRING .)
-    %               reduce using rule 38 (constant -> STRING .)
-    )               reduce using rule 38 (constant -> STRING .)
-    ,               reduce using rule 38 (constant -> STRING .)
-    RETURN          reduce using rule 38 (constant -> STRING .)
-                    reduce using rule 38 (constant -> STRING .)
-    ID              reduce using rule 38 (constant -> STRING .)
-    DEF             reduce using rule 38 (constant -> STRING .)
-    DEFP            reduce using rule 38 (constant -> STRING .)
-    DO              reduce using rule 38 (constant -> STRING .)
-    CONST           reduce using rule 38 (constant -> STRING .)
-    MUT             reduce using rule 38 (constant -> STRING .)
-    NUMBER          reduce using rule 38 (constant -> STRING .)
-    STRING          reduce using rule 38 (constant -> STRING .)
-    (               reduce using rule 38 (constant -> STRING .)
+    ID              shift and go to state 30
 
 
 state 13
+
+    (14) assignment -> ID . = expression
+    (40) constant -> ID .
+    (42) function_call -> ID . ( argument_list )
+
+  ! shift/reduce conflict for ( resolved as shift
+    =               shift and go to state 31
+    +               reduce using rule 40 (constant -> ID .)
+    -               reduce using rule 40 (constant -> ID .)
+    *               reduce using rule 40 (constant -> ID .)
+    /               reduce using rule 40 (constant -> ID .)
+    ^               reduce using rule 40 (constant -> ID .)
+    %               reduce using rule 40 (constant -> ID .)
+    END             reduce using rule 40 (constant -> ID .)
+    RETURN          reduce using rule 40 (constant -> ID .)
+                    reduce using rule 40 (constant -> ID .)
+    ID              reduce using rule 40 (constant -> ID .)
+    DEF             reduce using rule 40 (constant -> ID .)
+    DEFP            reduce using rule 40 (constant -> ID .)
+    DO              reduce using rule 40 (constant -> ID .)
+    CONST           reduce using rule 40 (constant -> ID .)
+    MUT             reduce using rule 40 (constant -> ID .)
+    NUMBER          reduce using rule 40 (constant -> ID .)
+    STRING          reduce using rule 40 (constant -> ID .)
+    (               shift and go to state 32
+
+  ! (               [ reduce using rule 40 (constant -> ID .) ]
+
+
+state 14
+
+    (9) statement -> private_function_definition .
+
+    END             reduce using rule 9 (statement -> private_function_definition .)
+    RETURN          reduce using rule 9 (statement -> private_function_definition .)
+                    reduce using rule 9 (statement -> private_function_definition .)
+    ID              reduce using rule 9 (statement -> private_function_definition .)
+    DEF             reduce using rule 9 (statement -> private_function_definition .)
+    DEFP            reduce using rule 9 (statement -> private_function_definition .)
+    DO              reduce using rule 9 (statement -> private_function_definition .)
+    CONST           reduce using rule 9 (statement -> private_function_definition .)
+    MUT             reduce using rule 9 (statement -> private_function_definition .)
+    NUMBER          reduce using rule 9 (statement -> private_function_definition .)
+    STRING          reduce using rule 9 (statement -> private_function_definition .)
+    (               reduce using rule 9 (statement -> private_function_definition .)
+
+
+state 15
+
+    (5) statements -> statement .
+
+    END             reduce using rule 5 (statements -> statement .)
+    RETURN          reduce using rule 5 (statements -> statement .)
+                    reduce using rule 5 (statements -> statement .)
+    ID              reduce using rule 5 (statements -> statement .)
+    DEF             reduce using rule 5 (statements -> statement .)
+    DEFP            reduce using rule 5 (statements -> statement .)
+    DO              reduce using rule 5 (statements -> statement .)
+    CONST           reduce using rule 5 (statements -> statement .)
+    MUT             reduce using rule 5 (statements -> statement .)
+    NUMBER          reduce using rule 5 (statements -> statement .)
+    STRING          reduce using rule 5 (statements -> statement .)
+    (               reduce using rule 5 (statements -> statement .)
+
+
+state 16
+
+    (37) constant -> NUMBER .
+
+    END             reduce using rule 37 (constant -> NUMBER .)
+    +               reduce using rule 37 (constant -> NUMBER .)
+    -               reduce using rule 37 (constant -> NUMBER .)
+    *               reduce using rule 37 (constant -> NUMBER .)
+    /               reduce using rule 37 (constant -> NUMBER .)
+    ^               reduce using rule 37 (constant -> NUMBER .)
+    %               reduce using rule 37 (constant -> NUMBER .)
+    RETURN          reduce using rule 37 (constant -> NUMBER .)
+                    reduce using rule 37 (constant -> NUMBER .)
+    ID              reduce using rule 37 (constant -> NUMBER .)
+    DEF             reduce using rule 37 (constant -> NUMBER .)
+    DEFP            reduce using rule 37 (constant -> NUMBER .)
+    DO              reduce using rule 37 (constant -> NUMBER .)
+    CONST           reduce using rule 37 (constant -> NUMBER .)
+    MUT             reduce using rule 37 (constant -> NUMBER .)
+    NUMBER          reduce using rule 37 (constant -> NUMBER .)
+    STRING          reduce using rule 37 (constant -> NUMBER .)
+    (               reduce using rule 37 (constant -> NUMBER .)
+    )               reduce using rule 37 (constant -> NUMBER .)
+    ,               reduce using rule 37 (constant -> NUMBER .)
+
+
+state 17
+
+    (29) do_block -> DO do_return . expression END
+    (30) expression -> . constant
+    (31) expression -> . expression + constant
+    (32) expression -> . expression - constant
+    (33) expression -> . expression * constant
+    (34) expression -> . expression / constant
+    (35) expression -> . expression ^ constant
+    (36) expression -> . expression % constant
+    (37) constant -> . NUMBER
+    (38) constant -> . STRING
+    (39) constant -> . function_call
+    (40) constant -> . ID
+    (41) constant -> . ( expression )
+    (42) function_call -> . ID ( argument_list )
+
+    NUMBER          shift and go to state 16
+    STRING          shift and go to state 19
+    ID              shift and go to state 33
+    (               shift and go to state 28
+
+    function_call                  shift and go to state 20
+    expression                     shift and go to state 34
+    constant                       shift and go to state 10
+
+state 18
 
     (24) do_block -> DO END .
 
@@ -316,37 +437,66 @@ state 13
     $end            reduce using rule 24 (do_block -> DO END .)
 
 
-state 14
+state 19
 
-    (14) assignment -> ID . = expression
-    (40) constant -> ID .
-    (42) function_call -> ID . ( argument_list )
+    (38) constant -> STRING .
 
-  ! shift/reduce conflict for ( resolved as shift
-    =               shift and go to state 32
-    +               reduce using rule 40 (constant -> ID .)
-    -               reduce using rule 40 (constant -> ID .)
-    *               reduce using rule 40 (constant -> ID .)
-    /               reduce using rule 40 (constant -> ID .)
-    ^               reduce using rule 40 (constant -> ID .)
-    %               reduce using rule 40 (constant -> ID .)
-    END             reduce using rule 40 (constant -> ID .)
-    RETURN          reduce using rule 40 (constant -> ID .)
-                    reduce using rule 40 (constant -> ID .)
-    ID              reduce using rule 40 (constant -> ID .)
-    DEF             reduce using rule 40 (constant -> ID .)
-    DEFP            reduce using rule 40 (constant -> ID .)
-    DO              reduce using rule 40 (constant -> ID .)
-    CONST           reduce using rule 40 (constant -> ID .)
-    MUT             reduce using rule 40 (constant -> ID .)
-    NUMBER          reduce using rule 40 (constant -> ID .)
-    STRING          reduce using rule 40 (constant -> ID .)
-    (               shift and go to state 31
-
-  ! (               [ reduce using rule 40 (constant -> ID .) ]
+    END             reduce using rule 38 (constant -> STRING .)
+    +               reduce using rule 38 (constant -> STRING .)
+    -               reduce using rule 38 (constant -> STRING .)
+    *               reduce using rule 38 (constant -> STRING .)
+    /               reduce using rule 38 (constant -> STRING .)
+    ^               reduce using rule 38 (constant -> STRING .)
+    %               reduce using rule 38 (constant -> STRING .)
+    RETURN          reduce using rule 38 (constant -> STRING .)
+                    reduce using rule 38 (constant -> STRING .)
+    ID              reduce using rule 38 (constant -> STRING .)
+    DEF             reduce using rule 38 (constant -> STRING .)
+    DEFP            reduce using rule 38 (constant -> STRING .)
+    DO              reduce using rule 38 (constant -> STRING .)
+    CONST           reduce using rule 38 (constant -> STRING .)
+    MUT             reduce using rule 38 (constant -> STRING .)
+    NUMBER          reduce using rule 38 (constant -> STRING .)
+    STRING          reduce using rule 38 (constant -> STRING .)
+    (               reduce using rule 38 (constant -> STRING .)
+    )               reduce using rule 38 (constant -> STRING .)
+    ,               reduce using rule 38 (constant -> STRING .)
 
 
-state 15
+state 20
+
+    (39) constant -> function_call .
+
+    END             reduce using rule 39 (constant -> function_call .)
+    +               reduce using rule 39 (constant -> function_call .)
+    -               reduce using rule 39 (constant -> function_call .)
+    *               reduce using rule 39 (constant -> function_call .)
+    /               reduce using rule 39 (constant -> function_call .)
+    ^               reduce using rule 39 (constant -> function_call .)
+    %               reduce using rule 39 (constant -> function_call .)
+    RETURN          reduce using rule 39 (constant -> function_call .)
+                    reduce using rule 39 (constant -> function_call .)
+    ID              reduce using rule 39 (constant -> function_call .)
+    DEF             reduce using rule 39 (constant -> function_call .)
+    DEFP            reduce using rule 39 (constant -> function_call .)
+    DO              reduce using rule 39 (constant -> function_call .)
+    CONST           reduce using rule 39 (constant -> function_call .)
+    MUT             reduce using rule 39 (constant -> function_call .)
+    NUMBER          reduce using rule 39 (constant -> function_call .)
+    STRING          reduce using rule 39 (constant -> function_call .)
+    (               reduce using rule 39 (constant -> function_call .)
+    )               reduce using rule 39 (constant -> function_call .)
+    ,               reduce using rule 39 (constant -> function_call .)
+
+
+state 21
+
+    (16) function_definition -> DEF . ID ( def_argument_list ) do_block
+
+    ID              shift and go to state 35
+
+
+state 22
 
     (11) statement -> expression .
     (31) expression -> expression . + constant
@@ -368,160 +518,15 @@ state 15
     NUMBER          reduce using rule 11 (statement -> expression .)
     STRING          reduce using rule 11 (statement -> expression .)
     (               reduce using rule 11 (statement -> expression .)
-    +               shift and go to state 33
-    -               shift and go to state 38
-    *               shift and go to state 36
-    /               shift and go to state 35
-    ^               shift and go to state 37
-    %               shift and go to state 34
+    +               shift and go to state 37
+    -               shift and go to state 39
+    *               shift and go to state 38
+    /               shift and go to state 41
+    ^               shift and go to state 36
+    %               shift and go to state 40
 
-
-state 16
-
-    (25) do_return -> RETURN .
-
-    NUMBER          reduce using rule 25 (do_return -> RETURN .)
-    STRING          reduce using rule 25 (do_return -> RETURN .)
-    ID              reduce using rule 25 (do_return -> RETURN .)
-    (               reduce using rule 25 (do_return -> RETURN .)
-
-
-state 17
-
-    (39) constant -> function_call .
-
-    END             reduce using rule 39 (constant -> function_call .)
-    +               reduce using rule 39 (constant -> function_call .)
-    -               reduce using rule 39 (constant -> function_call .)
-    *               reduce using rule 39 (constant -> function_call .)
-    /               reduce using rule 39 (constant -> function_call .)
-    ^               reduce using rule 39 (constant -> function_call .)
-    %               reduce using rule 39 (constant -> function_call .)
-    )               reduce using rule 39 (constant -> function_call .)
-    ,               reduce using rule 39 (constant -> function_call .)
-    RETURN          reduce using rule 39 (constant -> function_call .)
-                    reduce using rule 39 (constant -> function_call .)
-    ID              reduce using rule 39 (constant -> function_call .)
-    DEF             reduce using rule 39 (constant -> function_call .)
-    DEFP            reduce using rule 39 (constant -> function_call .)
-    DO              reduce using rule 39 (constant -> function_call .)
-    CONST           reduce using rule 39 (constant -> function_call .)
-    MUT             reduce using rule 39 (constant -> function_call .)
-    NUMBER          reduce using rule 39 (constant -> function_call .)
-    STRING          reduce using rule 39 (constant -> function_call .)
-    (               reduce using rule 39 (constant -> function_call .)
-
-
-state 18
-
-    (13) assignment_qualifier -> MUT .
-
-    ID              reduce using rule 13 (assignment_qualifier -> MUT .)
-
-
-state 19
-
-    (9) statement -> private_function_definition .
-
-    END             reduce using rule 9 (statement -> private_function_definition .)
-    RETURN          reduce using rule 9 (statement -> private_function_definition .)
-                    reduce using rule 9 (statement -> private_function_definition .)
-    ID              reduce using rule 9 (statement -> private_function_definition .)
-    DEF             reduce using rule 9 (statement -> private_function_definition .)
-    DEFP            reduce using rule 9 (statement -> private_function_definition .)
-    DO              reduce using rule 9 (statement -> private_function_definition .)
-    CONST           reduce using rule 9 (statement -> private_function_definition .)
-    MUT             reduce using rule 9 (statement -> private_function_definition .)
-    NUMBER          reduce using rule 9 (statement -> private_function_definition .)
-    STRING          reduce using rule 9 (statement -> private_function_definition .)
-    (               reduce using rule 9 (statement -> private_function_definition .)
-
-
-state 20
-
-    (17) private_function_definition -> DEFP . ID ( def_argument_list ) do_block
-
-    ID              shift and go to state 39
-
-
-state 21
-
-    (15) assignment -> assignment_qualifier . ID = expression
-
-    ID              shift and go to state 40
-
-
-state 22
-
-    (41) constant -> ( . expression )
-    (30) expression -> . constant
-    (31) expression -> . expression + constant
-    (32) expression -> . expression - constant
-    (33) expression -> . expression * constant
-    (34) expression -> . expression / constant
-    (35) expression -> . expression ^ constant
-    (36) expression -> . expression % constant
-    (37) constant -> . NUMBER
-    (38) constant -> . STRING
-    (39) constant -> . function_call
-    (40) constant -> . ID
-    (41) constant -> . ( expression )
-    (42) function_call -> . ID ( argument_list )
-
-    NUMBER          shift and go to state 28
-    STRING          shift and go to state 12
-    ID              shift and go to state 41
-    (               shift and go to state 22
-
-    expression                     shift and go to state 42
-    function_call                  shift and go to state 17
-    constant                       shift and go to state 23
 
 state 23
-
-    (30) expression -> constant .
-
-    END             reduce using rule 30 (expression -> constant .)
-    +               reduce using rule 30 (expression -> constant .)
-    -               reduce using rule 30 (expression -> constant .)
-    *               reduce using rule 30 (expression -> constant .)
-    /               reduce using rule 30 (expression -> constant .)
-    ^               reduce using rule 30 (expression -> constant .)
-    %               reduce using rule 30 (expression -> constant .)
-    )               reduce using rule 30 (expression -> constant .)
-    ,               reduce using rule 30 (expression -> constant .)
-    RETURN          reduce using rule 30 (expression -> constant .)
-                    reduce using rule 30 (expression -> constant .)
-    ID              reduce using rule 30 (expression -> constant .)
-    DEF             reduce using rule 30 (expression -> constant .)
-    DEFP            reduce using rule 30 (expression -> constant .)
-    DO              reduce using rule 30 (expression -> constant .)
-    CONST           reduce using rule 30 (expression -> constant .)
-    MUT             reduce using rule 30 (expression -> constant .)
-    NUMBER          reduce using rule 30 (expression -> constant .)
-    STRING          reduce using rule 30 (expression -> constant .)
-    (               reduce using rule 30 (expression -> constant .)
-
-
-state 24
-
-    (8) statement -> function_definition .
-
-    END             reduce using rule 8 (statement -> function_definition .)
-    RETURN          reduce using rule 8 (statement -> function_definition .)
-                    reduce using rule 8 (statement -> function_definition .)
-    ID              reduce using rule 8 (statement -> function_definition .)
-    DEF             reduce using rule 8 (statement -> function_definition .)
-    DEFP            reduce using rule 8 (statement -> function_definition .)
-    DO              reduce using rule 8 (statement -> function_definition .)
-    CONST           reduce using rule 8 (statement -> function_definition .)
-    MUT             reduce using rule 8 (statement -> function_definition .)
-    NUMBER          reduce using rule 8 (statement -> function_definition .)
-    STRING          reduce using rule 8 (statement -> function_definition .)
-    (               reduce using rule 8 (statement -> function_definition .)
-
-
-state 25
 
     (7) statement -> assignment .
 
@@ -539,7 +544,28 @@ state 25
     (               reduce using rule 7 (statement -> assignment .)
 
 
+state 24
+
+    (15) assignment -> assignment_qualifier . ID = expression
+
+    ID              shift and go to state 42
+
+
+state 25
+
+    (12) assignment_qualifier -> CONST .
+
+    ID              reduce using rule 12 (assignment_qualifier -> CONST .)
+
+
 state 26
+
+    (13) assignment_qualifier -> MUT .
+
+    ID              reduce using rule 13 (assignment_qualifier -> MUT .)
+
+
+state 27
 
     (27) do_block -> DO statements . END
     (28) do_block -> DO statements . do_return expression END
@@ -575,33 +601,33 @@ state 26
     (41) constant -> . ( expression )
     (42) function_call -> . ID ( argument_list )
 
-    END             shift and go to state 43
-    RETURN          shift and go to state 16
+    END             shift and go to state 45
+    RETURN          shift and go to state 11
                     shift and go to state 8
-    ID              shift and go to state 14
-    DEF             shift and go to state 11
-    DEFP            shift and go to state 20
+    ID              shift and go to state 13
+    DEF             shift and go to state 21
+    DEFP            shift and go to state 12
     DO              shift and go to state 6
-    CONST           shift and go to state 9
-    MUT             shift and go to state 18
-    NUMBER          shift and go to state 28
-    STRING          shift and go to state 12
-    (               shift and go to state 22
+    CONST           shift and go to state 25
+    MUT             shift and go to state 26
+    NUMBER          shift and go to state 16
+    STRING          shift and go to state 19
+    (               shift and go to state 28
 
-    function_call                  shift and go to state 17
-    private_function_definition    shift and go to state 19
-    assignment_qualifier           shift and go to state 21
-    constant                       shift and go to state 23
-    function_definition            shift and go to state 24
-    assignment                     shift and go to state 25
+    function_definition            shift and go to state 9
+    expression                     shift and go to state 22
+    assignment                     shift and go to state 23
+    private_function_definition    shift and go to state 14
+    statement                      shift and go to state 43
+    constant                       shift and go to state 10
     do_return                      shift and go to state 44
-    expression                     shift and go to state 15
-    do_block                       shift and go to state 10
-    statement                      shift and go to state 45
+    function_call                  shift and go to state 20
+    assignment_qualifier           shift and go to state 24
+    do_block                       shift and go to state 29
 
-state 27
+state 28
 
-    (29) do_block -> DO do_return . expression END
+    (41) constant -> ( . expression )
     (30) expression -> . constant
     (31) expression -> . expression + constant
     (32) expression -> . expression - constant
@@ -616,67 +642,67 @@ state 27
     (41) constant -> . ( expression )
     (42) function_call -> . ID ( argument_list )
 
-    NUMBER          shift and go to state 28
-    STRING          shift and go to state 12
-    ID              shift and go to state 41
-    (               shift and go to state 22
+    NUMBER          shift and go to state 16
+    STRING          shift and go to state 19
+    ID              shift and go to state 33
+    (               shift and go to state 28
 
     expression                     shift and go to state 46
-    function_call                  shift and go to state 17
-    constant                       shift and go to state 23
-
-state 28
-
-    (37) constant -> NUMBER .
-
-    END             reduce using rule 37 (constant -> NUMBER .)
-    +               reduce using rule 37 (constant -> NUMBER .)
-    -               reduce using rule 37 (constant -> NUMBER .)
-    *               reduce using rule 37 (constant -> NUMBER .)
-    /               reduce using rule 37 (constant -> NUMBER .)
-    ^               reduce using rule 37 (constant -> NUMBER .)
-    %               reduce using rule 37 (constant -> NUMBER .)
-    )               reduce using rule 37 (constant -> NUMBER .)
-    ,               reduce using rule 37 (constant -> NUMBER .)
-    RETURN          reduce using rule 37 (constant -> NUMBER .)
-                    reduce using rule 37 (constant -> NUMBER .)
-    ID              reduce using rule 37 (constant -> NUMBER .)
-    DEF             reduce using rule 37 (constant -> NUMBER .)
-    DEFP            reduce using rule 37 (constant -> NUMBER .)
-    DO              reduce using rule 37 (constant -> NUMBER .)
-    CONST           reduce using rule 37 (constant -> NUMBER .)
-    MUT             reduce using rule 37 (constant -> NUMBER .)
-    NUMBER          reduce using rule 37 (constant -> NUMBER .)
-    STRING          reduce using rule 37 (constant -> NUMBER .)
-    (               reduce using rule 37 (constant -> NUMBER .)
-
+    constant                       shift and go to state 10
+    function_call                  shift and go to state 20
 
 state 29
 
-    (5) statements -> statement .
+    (10) statement -> do_block .
 
-    END             reduce using rule 5 (statements -> statement .)
-    RETURN          reduce using rule 5 (statements -> statement .)
-                    reduce using rule 5 (statements -> statement .)
-    ID              reduce using rule 5 (statements -> statement .)
-    DEF             reduce using rule 5 (statements -> statement .)
-    DEFP            reduce using rule 5 (statements -> statement .)
-    DO              reduce using rule 5 (statements -> statement .)
-    CONST           reduce using rule 5 (statements -> statement .)
-    MUT             reduce using rule 5 (statements -> statement .)
-    NUMBER          reduce using rule 5 (statements -> statement .)
-    STRING          reduce using rule 5 (statements -> statement .)
-    (               reduce using rule 5 (statements -> statement .)
+    END             reduce using rule 10 (statement -> do_block .)
+    RETURN          reduce using rule 10 (statement -> do_block .)
+                    reduce using rule 10 (statement -> do_block .)
+    ID              reduce using rule 10 (statement -> do_block .)
+    DEF             reduce using rule 10 (statement -> do_block .)
+    DEFP            reduce using rule 10 (statement -> do_block .)
+    DO              reduce using rule 10 (statement -> do_block .)
+    CONST           reduce using rule 10 (statement -> do_block .)
+    MUT             reduce using rule 10 (statement -> do_block .)
+    NUMBER          reduce using rule 10 (statement -> do_block .)
+    STRING          reduce using rule 10 (statement -> do_block .)
+    (               reduce using rule 10 (statement -> do_block .)
 
 
 state 30
 
-    (16) function_definition -> DEF ID . ( def_argument_list ) do_block
+    (17) private_function_definition -> DEFP ID . ( def_argument_list ) do_block
 
     (               shift and go to state 47
 
 
 state 31
+
+    (14) assignment -> ID = . expression
+    (30) expression -> . constant
+    (31) expression -> . expression + constant
+    (32) expression -> . expression - constant
+    (33) expression -> . expression * constant
+    (34) expression -> . expression / constant
+    (35) expression -> . expression ^ constant
+    (36) expression -> . expression % constant
+    (37) constant -> . NUMBER
+    (38) constant -> . STRING
+    (39) constant -> . function_call
+    (40) constant -> . ID
+    (41) constant -> . ( expression )
+    (42) function_call -> . ID ( argument_list )
+
+    NUMBER          shift and go to state 16
+    STRING          shift and go to state 19
+    ID              shift and go to state 33
+    (               shift and go to state 28
+
+    expression                     shift and go to state 48
+    constant                       shift and go to state 10
+    function_call                  shift and go to state 20
+
+state 32
 
     (42) function_call -> ID ( . argument_list )
     (44) argument_list -> . empty
@@ -700,167 +726,19 @@ state 31
 
     )               reduce using rule 1 (empty -> .)
     ,               reduce using rule 1 (empty -> .)
-    NUMBER          shift and go to state 28
-    STRING          shift and go to state 12
-    ID              shift and go to state 41
-    (               shift and go to state 22
+    NUMBER          shift and go to state 16
+    STRING          shift and go to state 19
+    ID              shift and go to state 33
+    (               shift and go to state 28
 
-    argument                       shift and go to state 51
-    empty                          shift and go to state 49
-    argument_list                  shift and go to state 48
-    expression                     shift and go to state 50
-    constant                       shift and go to state 23
-    function_call                  shift and go to state 17
-
-state 32
-
-    (14) assignment -> ID = . expression
-    (30) expression -> . constant
-    (31) expression -> . expression + constant
-    (32) expression -> . expression - constant
-    (33) expression -> . expression * constant
-    (34) expression -> . expression / constant
-    (35) expression -> . expression ^ constant
-    (36) expression -> . expression % constant
-    (37) constant -> . NUMBER
-    (38) constant -> . STRING
-    (39) constant -> . function_call
-    (40) constant -> . ID
-    (41) constant -> . ( expression )
-    (42) function_call -> . ID ( argument_list )
-
-    NUMBER          shift and go to state 28
-    STRING          shift and go to state 12
-    ID              shift and go to state 41
-    (               shift and go to state 22
-
-    expression                     shift and go to state 52
-    function_call                  shift and go to state 17
-    constant                       shift and go to state 23
+    empty                          shift and go to state 50
+    argument                       shift and go to state 52
+    expression                     shift and go to state 49
+    argument_list                  shift and go to state 51
+    constant                       shift and go to state 10
+    function_call                  shift and go to state 20
 
 state 33
-
-    (31) expression -> expression + . constant
-    (37) constant -> . NUMBER
-    (38) constant -> . STRING
-    (39) constant -> . function_call
-    (40) constant -> . ID
-    (41) constant -> . ( expression )
-    (42) function_call -> . ID ( argument_list )
-
-    NUMBER          shift and go to state 28
-    STRING          shift and go to state 12
-    ID              shift and go to state 41
-    (               shift and go to state 22
-
-    function_call                  shift and go to state 17
-    constant                       shift and go to state 53
-
-state 34
-
-    (36) expression -> expression % . constant
-    (37) constant -> . NUMBER
-    (38) constant -> . STRING
-    (39) constant -> . function_call
-    (40) constant -> . ID
-    (41) constant -> . ( expression )
-    (42) function_call -> . ID ( argument_list )
-
-    NUMBER          shift and go to state 28
-    STRING          shift and go to state 12
-    ID              shift and go to state 41
-    (               shift and go to state 22
-
-    function_call                  shift and go to state 17
-    constant                       shift and go to state 54
-
-state 35
-
-    (34) expression -> expression / . constant
-    (37) constant -> . NUMBER
-    (38) constant -> . STRING
-    (39) constant -> . function_call
-    (40) constant -> . ID
-    (41) constant -> . ( expression )
-    (42) function_call -> . ID ( argument_list )
-
-    NUMBER          shift and go to state 28
-    STRING          shift and go to state 12
-    ID              shift and go to state 41
-    (               shift and go to state 22
-
-    function_call                  shift and go to state 17
-    constant                       shift and go to state 55
-
-state 36
-
-    (33) expression -> expression * . constant
-    (37) constant -> . NUMBER
-    (38) constant -> . STRING
-    (39) constant -> . function_call
-    (40) constant -> . ID
-    (41) constant -> . ( expression )
-    (42) function_call -> . ID ( argument_list )
-
-    NUMBER          shift and go to state 28
-    STRING          shift and go to state 12
-    ID              shift and go to state 41
-    (               shift and go to state 22
-
-    function_call                  shift and go to state 17
-    constant                       shift and go to state 56
-
-state 37
-
-    (35) expression -> expression ^ . constant
-    (37) constant -> . NUMBER
-    (38) constant -> . STRING
-    (39) constant -> . function_call
-    (40) constant -> . ID
-    (41) constant -> . ( expression )
-    (42) function_call -> . ID ( argument_list )
-
-    NUMBER          shift and go to state 28
-    STRING          shift and go to state 12
-    ID              shift and go to state 41
-    (               shift and go to state 22
-
-    function_call                  shift and go to state 17
-    constant                       shift and go to state 57
-
-state 38
-
-    (32) expression -> expression - . constant
-    (37) constant -> . NUMBER
-    (38) constant -> . STRING
-    (39) constant -> . function_call
-    (40) constant -> . ID
-    (41) constant -> . ( expression )
-    (42) function_call -> . ID ( argument_list )
-
-    NUMBER          shift and go to state 28
-    STRING          shift and go to state 12
-    ID              shift and go to state 41
-    (               shift and go to state 22
-
-    function_call                  shift and go to state 17
-    constant                       shift and go to state 58
-
-state 39
-
-    (17) private_function_definition -> DEFP ID . ( def_argument_list ) do_block
-
-    (               shift and go to state 59
-
-
-state 40
-
-    (15) assignment -> assignment_qualifier ID . = expression
-
-    =               shift and go to state 60
-
-
-state 41
 
     (40) constant -> ID .
     (42) function_call -> ID . ( argument_list )
@@ -873,8 +751,6 @@ state 41
     /               reduce using rule 40 (constant -> ID .)
     ^               reduce using rule 40 (constant -> ID .)
     %               reduce using rule 40 (constant -> ID .)
-    )               reduce using rule 40 (constant -> ID .)
-    ,               reduce using rule 40 (constant -> ID .)
     RETURN          reduce using rule 40 (constant -> ID .)
                     reduce using rule 40 (constant -> ID .)
     ID              reduce using rule 40 (constant -> ID .)
@@ -885,14 +761,16 @@ state 41
     MUT             reduce using rule 40 (constant -> ID .)
     NUMBER          reduce using rule 40 (constant -> ID .)
     STRING          reduce using rule 40 (constant -> ID .)
-    (               shift and go to state 31
+    )               reduce using rule 40 (constant -> ID .)
+    ,               reduce using rule 40 (constant -> ID .)
+    (               shift and go to state 32
 
   ! (               [ reduce using rule 40 (constant -> ID .) ]
 
 
-state 42
+state 34
 
-    (41) constant -> ( expression . )
+    (29) do_block -> DO do_return expression . END
     (31) expression -> expression . + constant
     (32) expression -> expression . - constant
     (33) expression -> expression . * constant
@@ -900,33 +778,153 @@ state 42
     (35) expression -> expression . ^ constant
     (36) expression -> expression . % constant
 
-    )               shift and go to state 61
-    +               shift and go to state 33
-    -               shift and go to state 38
-    *               shift and go to state 36
-    /               shift and go to state 35
-    ^               shift and go to state 37
-    %               shift and go to state 34
+    END             shift and go to state 53
+    +               shift and go to state 37
+    -               shift and go to state 39
+    *               shift and go to state 38
+    /               shift and go to state 41
+    ^               shift and go to state 36
+    %               shift and go to state 40
+
+
+state 35
+
+    (16) function_definition -> DEF ID . ( def_argument_list ) do_block
+
+    (               shift and go to state 54
+
+
+state 36
+
+    (35) expression -> expression ^ . constant
+    (37) constant -> . NUMBER
+    (38) constant -> . STRING
+    (39) constant -> . function_call
+    (40) constant -> . ID
+    (41) constant -> . ( expression )
+    (42) function_call -> . ID ( argument_list )
+
+    NUMBER          shift and go to state 16
+    STRING          shift and go to state 19
+    ID              shift and go to state 33
+    (               shift and go to state 28
+
+    constant                       shift and go to state 55
+    function_call                  shift and go to state 20
+
+state 37
+
+    (31) expression -> expression + . constant
+    (37) constant -> . NUMBER
+    (38) constant -> . STRING
+    (39) constant -> . function_call
+    (40) constant -> . ID
+    (41) constant -> . ( expression )
+    (42) function_call -> . ID ( argument_list )
+
+    NUMBER          shift and go to state 16
+    STRING          shift and go to state 19
+    ID              shift and go to state 33
+    (               shift and go to state 28
+
+    constant                       shift and go to state 56
+    function_call                  shift and go to state 20
+
+state 38
+
+    (33) expression -> expression * . constant
+    (37) constant -> . NUMBER
+    (38) constant -> . STRING
+    (39) constant -> . function_call
+    (40) constant -> . ID
+    (41) constant -> . ( expression )
+    (42) function_call -> . ID ( argument_list )
+
+    NUMBER          shift and go to state 16
+    STRING          shift and go to state 19
+    ID              shift and go to state 33
+    (               shift and go to state 28
+
+    constant                       shift and go to state 57
+    function_call                  shift and go to state 20
+
+state 39
+
+    (32) expression -> expression - . constant
+    (37) constant -> . NUMBER
+    (38) constant -> . STRING
+    (39) constant -> . function_call
+    (40) constant -> . ID
+    (41) constant -> . ( expression )
+    (42) function_call -> . ID ( argument_list )
+
+    NUMBER          shift and go to state 16
+    STRING          shift and go to state 19
+    ID              shift and go to state 33
+    (               shift and go to state 28
+
+    constant                       shift and go to state 58
+    function_call                  shift and go to state 20
+
+state 40
+
+    (36) expression -> expression % . constant
+    (37) constant -> . NUMBER
+    (38) constant -> . STRING
+    (39) constant -> . function_call
+    (40) constant -> . ID
+    (41) constant -> . ( expression )
+    (42) function_call -> . ID ( argument_list )
+
+    NUMBER          shift and go to state 16
+    STRING          shift and go to state 19
+    ID              shift and go to state 33
+    (               shift and go to state 28
+
+    constant                       shift and go to state 59
+    function_call                  shift and go to state 20
+
+state 41
+
+    (34) expression -> expression / . constant
+    (37) constant -> . NUMBER
+    (38) constant -> . STRING
+    (39) constant -> . function_call
+    (40) constant -> . ID
+    (41) constant -> . ( expression )
+    (42) function_call -> . ID ( argument_list )
+
+    NUMBER          shift and go to state 16
+    STRING          shift and go to state 19
+    ID              shift and go to state 33
+    (               shift and go to state 28
+
+    constant                       shift and go to state 60
+    function_call                  shift and go to state 20
+
+state 42
+
+    (15) assignment -> assignment_qualifier ID . = expression
+
+    =               shift and go to state 61
 
 
 state 43
 
-    (27) do_block -> DO statements END .
+    (6) statements -> statements statement .
 
-    END             reduce using rule 27 (do_block -> DO statements END .)
-    RETURN          reduce using rule 27 (do_block -> DO statements END .)
-                    reduce using rule 27 (do_block -> DO statements END .)
-    ID              reduce using rule 27 (do_block -> DO statements END .)
-    DEF             reduce using rule 27 (do_block -> DO statements END .)
-    DEFP            reduce using rule 27 (do_block -> DO statements END .)
-    DO              reduce using rule 27 (do_block -> DO statements END .)
-    CONST           reduce using rule 27 (do_block -> DO statements END .)
-    MUT             reduce using rule 27 (do_block -> DO statements END .)
-    NUMBER          reduce using rule 27 (do_block -> DO statements END .)
-    STRING          reduce using rule 27 (do_block -> DO statements END .)
-    (               reduce using rule 27 (do_block -> DO statements END .)
-    DEFMODULE       reduce using rule 27 (do_block -> DO statements END .)
-    $end            reduce using rule 27 (do_block -> DO statements END .)
+    END             reduce using rule 6 (statements -> statements statement .)
+    RETURN          reduce using rule 6 (statements -> statements statement .)
+                    reduce using rule 6 (statements -> statements statement .)
+    ID              reduce using rule 6 (statements -> statements statement .)
+    DEF             reduce using rule 6 (statements -> statements statement .)
+    DEFP            reduce using rule 6 (statements -> statements statement .)
+    DO              reduce using rule 6 (statements -> statements statement .)
+    CONST           reduce using rule 6 (statements -> statements statement .)
+    MUT             reduce using rule 6 (statements -> statements statement .)
+    NUMBER          reduce using rule 6 (statements -> statements statement .)
+    STRING          reduce using rule 6 (statements -> statements statement .)
+    (               reduce using rule 6 (statements -> statements statement .)
 
 
 state 44
@@ -946,36 +944,38 @@ state 44
     (41) constant -> . ( expression )
     (42) function_call -> . ID ( argument_list )
 
-    NUMBER          shift and go to state 28
-    STRING          shift and go to state 12
-    ID              shift and go to state 41
-    (               shift and go to state 22
+    NUMBER          shift and go to state 16
+    STRING          shift and go to state 19
+    ID              shift and go to state 33
+    (               shift and go to state 28
 
-    function_call                  shift and go to state 17
+    constant                       shift and go to state 10
     expression                     shift and go to state 62
-    constant                       shift and go to state 23
+    function_call                  shift and go to state 20
 
 state 45
 
-    (6) statements -> statements statement .
+    (27) do_block -> DO statements END .
 
-    END             reduce using rule 6 (statements -> statements statement .)
-    RETURN          reduce using rule 6 (statements -> statements statement .)
-                    reduce using rule 6 (statements -> statements statement .)
-    ID              reduce using rule 6 (statements -> statements statement .)
-    DEF             reduce using rule 6 (statements -> statements statement .)
-    DEFP            reduce using rule 6 (statements -> statements statement .)
-    DO              reduce using rule 6 (statements -> statements statement .)
-    CONST           reduce using rule 6 (statements -> statements statement .)
-    MUT             reduce using rule 6 (statements -> statements statement .)
-    NUMBER          reduce using rule 6 (statements -> statements statement .)
-    STRING          reduce using rule 6 (statements -> statements statement .)
-    (               reduce using rule 6 (statements -> statements statement .)
+    END             reduce using rule 27 (do_block -> DO statements END .)
+    RETURN          reduce using rule 27 (do_block -> DO statements END .)
+                    reduce using rule 27 (do_block -> DO statements END .)
+    ID              reduce using rule 27 (do_block -> DO statements END .)
+    DEF             reduce using rule 27 (do_block -> DO statements END .)
+    DEFP            reduce using rule 27 (do_block -> DO statements END .)
+    DO              reduce using rule 27 (do_block -> DO statements END .)
+    CONST           reduce using rule 27 (do_block -> DO statements END .)
+    MUT             reduce using rule 27 (do_block -> DO statements END .)
+    NUMBER          reduce using rule 27 (do_block -> DO statements END .)
+    STRING          reduce using rule 27 (do_block -> DO statements END .)
+    (               reduce using rule 27 (do_block -> DO statements END .)
+    DEFMODULE       reduce using rule 27 (do_block -> DO statements END .)
+    $end            reduce using rule 27 (do_block -> DO statements END .)
 
 
 state 46
 
-    (29) do_block -> DO do_return expression . END
+    (41) constant -> ( expression . )
     (31) expression -> expression . + constant
     (32) expression -> expression . - constant
     (33) expression -> expression . * constant
@@ -983,18 +983,18 @@ state 46
     (35) expression -> expression . ^ constant
     (36) expression -> expression . % constant
 
-    END             shift and go to state 63
-    +               shift and go to state 33
-    -               shift and go to state 38
-    *               shift and go to state 36
-    /               shift and go to state 35
-    ^               shift and go to state 37
-    %               shift and go to state 34
+    )               shift and go to state 63
+    +               shift and go to state 37
+    -               shift and go to state 39
+    *               shift and go to state 38
+    /               shift and go to state 41
+    ^               shift and go to state 36
+    %               shift and go to state 40
 
 
 state 47
 
-    (16) function_definition -> DEF ID ( . def_argument_list ) do_block
+    (17) private_function_definition -> DEFP ID ( . def_argument_list ) do_block
     (21) def_argument_list -> . empty
     (22) def_argument_list -> . def_argument
     (23) def_argument_list -> . def_argument_list , def_argument
@@ -1009,62 +1009,17 @@ state 47
 
     )               reduce using rule 1 (empty -> .)
     ,               reduce using rule 1 (empty -> .)
-    ID              shift and go to state 66
-    CONST           shift and go to state 9
-    MUT             shift and go to state 18
+    ID              shift and go to state 64
+    CONST           shift and go to state 25
+    MUT             shift and go to state 26
 
-    assignment_qualifier           shift and go to state 65
-    def_argument                   shift and go to state 64
-    assignment                     shift and go to state 67
-    def_argument_list              shift and go to state 68
-    empty                          shift and go to state 69
+    empty                          shift and go to state 68
+    assignment                     shift and go to state 65
+    def_argument_list              shift and go to state 69
+    assignment_qualifier           shift and go to state 66
+    def_argument                   shift and go to state 67
 
 state 48
-
-    (42) function_call -> ID ( argument_list . )
-    (46) argument_list -> argument_list . , argument
-
-    )               shift and go to state 71
-    ,               shift and go to state 70
-
-
-state 49
-
-    (44) argument_list -> empty .
-
-    )               reduce using rule 44 (argument_list -> empty .)
-    ,               reduce using rule 44 (argument_list -> empty .)
-
-
-state 50
-
-    (43) argument -> expression .
-    (31) expression -> expression . + constant
-    (32) expression -> expression . - constant
-    (33) expression -> expression . * constant
-    (34) expression -> expression . / constant
-    (35) expression -> expression . ^ constant
-    (36) expression -> expression . % constant
-
-    )               reduce using rule 43 (argument -> expression .)
-    ,               reduce using rule 43 (argument -> expression .)
-    +               shift and go to state 33
-    -               shift and go to state 38
-    *               shift and go to state 36
-    /               shift and go to state 35
-    ^               shift and go to state 37
-    %               shift and go to state 34
-
-
-state 51
-
-    (45) argument_list -> argument .
-
-    )               reduce using rule 45 (argument_list -> argument .)
-    ,               reduce using rule 45 (argument_list -> argument .)
-
-
-state 52
 
     (14) assignment -> ID = expression .
     (31) expression -> expression . + constant
@@ -1088,252 +1043,17 @@ state 52
     NUMBER          reduce using rule 14 (assignment -> ID = expression .)
     STRING          reduce using rule 14 (assignment -> ID = expression .)
     (               reduce using rule 14 (assignment -> ID = expression .)
-    +               shift and go to state 33
-    -               shift and go to state 38
-    *               shift and go to state 36
-    /               shift and go to state 35
-    ^               shift and go to state 37
-    %               shift and go to state 34
+    +               shift and go to state 37
+    -               shift and go to state 39
+    *               shift and go to state 38
+    /               shift and go to state 41
+    ^               shift and go to state 36
+    %               shift and go to state 40
 
 
-state 53
+state 49
 
-    (31) expression -> expression + constant .
-
-    END             reduce using rule 31 (expression -> expression + constant .)
-    +               reduce using rule 31 (expression -> expression + constant .)
-    -               reduce using rule 31 (expression -> expression + constant .)
-    *               reduce using rule 31 (expression -> expression + constant .)
-    /               reduce using rule 31 (expression -> expression + constant .)
-    ^               reduce using rule 31 (expression -> expression + constant .)
-    %               reduce using rule 31 (expression -> expression + constant .)
-    )               reduce using rule 31 (expression -> expression + constant .)
-    ,               reduce using rule 31 (expression -> expression + constant .)
-    RETURN          reduce using rule 31 (expression -> expression + constant .)
-                    reduce using rule 31 (expression -> expression + constant .)
-    ID              reduce using rule 31 (expression -> expression + constant .)
-    DEF             reduce using rule 31 (expression -> expression + constant .)
-    DEFP            reduce using rule 31 (expression -> expression + constant .)
-    DO              reduce using rule 31 (expression -> expression + constant .)
-    CONST           reduce using rule 31 (expression -> expression + constant .)
-    MUT             reduce using rule 31 (expression -> expression + constant .)
-    NUMBER          reduce using rule 31 (expression -> expression + constant .)
-    STRING          reduce using rule 31 (expression -> expression + constant .)
-    (               reduce using rule 31 (expression -> expression + constant .)
-
-
-state 54
-
-    (36) expression -> expression % constant .
-
-    END             reduce using rule 36 (expression -> expression % constant .)
-    +               reduce using rule 36 (expression -> expression % constant .)
-    -               reduce using rule 36 (expression -> expression % constant .)
-    *               reduce using rule 36 (expression -> expression % constant .)
-    /               reduce using rule 36 (expression -> expression % constant .)
-    ^               reduce using rule 36 (expression -> expression % constant .)
-    %               reduce using rule 36 (expression -> expression % constant .)
-    )               reduce using rule 36 (expression -> expression % constant .)
-    ,               reduce using rule 36 (expression -> expression % constant .)
-    RETURN          reduce using rule 36 (expression -> expression % constant .)
-                    reduce using rule 36 (expression -> expression % constant .)
-    ID              reduce using rule 36 (expression -> expression % constant .)
-    DEF             reduce using rule 36 (expression -> expression % constant .)
-    DEFP            reduce using rule 36 (expression -> expression % constant .)
-    DO              reduce using rule 36 (expression -> expression % constant .)
-    CONST           reduce using rule 36 (expression -> expression % constant .)
-    MUT             reduce using rule 36 (expression -> expression % constant .)
-    NUMBER          reduce using rule 36 (expression -> expression % constant .)
-    STRING          reduce using rule 36 (expression -> expression % constant .)
-    (               reduce using rule 36 (expression -> expression % constant .)
-
-
-state 55
-
-    (34) expression -> expression / constant .
-
-    END             reduce using rule 34 (expression -> expression / constant .)
-    +               reduce using rule 34 (expression -> expression / constant .)
-    -               reduce using rule 34 (expression -> expression / constant .)
-    *               reduce using rule 34 (expression -> expression / constant .)
-    /               reduce using rule 34 (expression -> expression / constant .)
-    ^               reduce using rule 34 (expression -> expression / constant .)
-    %               reduce using rule 34 (expression -> expression / constant .)
-    )               reduce using rule 34 (expression -> expression / constant .)
-    ,               reduce using rule 34 (expression -> expression / constant .)
-    RETURN          reduce using rule 34 (expression -> expression / constant .)
-                    reduce using rule 34 (expression -> expression / constant .)
-    ID              reduce using rule 34 (expression -> expression / constant .)
-    DEF             reduce using rule 34 (expression -> expression / constant .)
-    DEFP            reduce using rule 34 (expression -> expression / constant .)
-    DO              reduce using rule 34 (expression -> expression / constant .)
-    CONST           reduce using rule 34 (expression -> expression / constant .)
-    MUT             reduce using rule 34 (expression -> expression / constant .)
-    NUMBER          reduce using rule 34 (expression -> expression / constant .)
-    STRING          reduce using rule 34 (expression -> expression / constant .)
-    (               reduce using rule 34 (expression -> expression / constant .)
-
-
-state 56
-
-    (33) expression -> expression * constant .
-
-    END             reduce using rule 33 (expression -> expression * constant .)
-    +               reduce using rule 33 (expression -> expression * constant .)
-    -               reduce using rule 33 (expression -> expression * constant .)
-    *               reduce using rule 33 (expression -> expression * constant .)
-    /               reduce using rule 33 (expression -> expression * constant .)
-    ^               reduce using rule 33 (expression -> expression * constant .)
-    %               reduce using rule 33 (expression -> expression * constant .)
-    )               reduce using rule 33 (expression -> expression * constant .)
-    ,               reduce using rule 33 (expression -> expression * constant .)
-    RETURN          reduce using rule 33 (expression -> expression * constant .)
-                    reduce using rule 33 (expression -> expression * constant .)
-    ID              reduce using rule 33 (expression -> expression * constant .)
-    DEF             reduce using rule 33 (expression -> expression * constant .)
-    DEFP            reduce using rule 33 (expression -> expression * constant .)
-    DO              reduce using rule 33 (expression -> expression * constant .)
-    CONST           reduce using rule 33 (expression -> expression * constant .)
-    MUT             reduce using rule 33 (expression -> expression * constant .)
-    NUMBER          reduce using rule 33 (expression -> expression * constant .)
-    STRING          reduce using rule 33 (expression -> expression * constant .)
-    (               reduce using rule 33 (expression -> expression * constant .)
-
-
-state 57
-
-    (35) expression -> expression ^ constant .
-
-    END             reduce using rule 35 (expression -> expression ^ constant .)
-    +               reduce using rule 35 (expression -> expression ^ constant .)
-    -               reduce using rule 35 (expression -> expression ^ constant .)
-    *               reduce using rule 35 (expression -> expression ^ constant .)
-    /               reduce using rule 35 (expression -> expression ^ constant .)
-    ^               reduce using rule 35 (expression -> expression ^ constant .)
-    %               reduce using rule 35 (expression -> expression ^ constant .)
-    )               reduce using rule 35 (expression -> expression ^ constant .)
-    ,               reduce using rule 35 (expression -> expression ^ constant .)
-    RETURN          reduce using rule 35 (expression -> expression ^ constant .)
-                    reduce using rule 35 (expression -> expression ^ constant .)
-    ID              reduce using rule 35 (expression -> expression ^ constant .)
-    DEF             reduce using rule 35 (expression -> expression ^ constant .)
-    DEFP            reduce using rule 35 (expression -> expression ^ constant .)
-    DO              reduce using rule 35 (expression -> expression ^ constant .)
-    CONST           reduce using rule 35 (expression -> expression ^ constant .)
-    MUT             reduce using rule 35 (expression -> expression ^ constant .)
-    NUMBER          reduce using rule 35 (expression -> expression ^ constant .)
-    STRING          reduce using rule 35 (expression -> expression ^ constant .)
-    (               reduce using rule 35 (expression -> expression ^ constant .)
-
-
-state 58
-
-    (32) expression -> expression - constant .
-
-    END             reduce using rule 32 (expression -> expression - constant .)
-    +               reduce using rule 32 (expression -> expression - constant .)
-    -               reduce using rule 32 (expression -> expression - constant .)
-    *               reduce using rule 32 (expression -> expression - constant .)
-    /               reduce using rule 32 (expression -> expression - constant .)
-    ^               reduce using rule 32 (expression -> expression - constant .)
-    %               reduce using rule 32 (expression -> expression - constant .)
-    )               reduce using rule 32 (expression -> expression - constant .)
-    ,               reduce using rule 32 (expression -> expression - constant .)
-    RETURN          reduce using rule 32 (expression -> expression - constant .)
-                    reduce using rule 32 (expression -> expression - constant .)
-    ID              reduce using rule 32 (expression -> expression - constant .)
-    DEF             reduce using rule 32 (expression -> expression - constant .)
-    DEFP            reduce using rule 32 (expression -> expression - constant .)
-    DO              reduce using rule 32 (expression -> expression - constant .)
-    CONST           reduce using rule 32 (expression -> expression - constant .)
-    MUT             reduce using rule 32 (expression -> expression - constant .)
-    NUMBER          reduce using rule 32 (expression -> expression - constant .)
-    STRING          reduce using rule 32 (expression -> expression - constant .)
-    (               reduce using rule 32 (expression -> expression - constant .)
-
-
-state 59
-
-    (17) private_function_definition -> DEFP ID ( . def_argument_list ) do_block
-    (21) def_argument_list -> . empty
-    (22) def_argument_list -> . def_argument
-    (23) def_argument_list -> . def_argument_list , def_argument
-    (1) empty -> .
-    (18) def_argument -> . ID
-    (19) def_argument -> . assignment_qualifier ID
-    (20) def_argument -> . assignment
-    (12) assignment_qualifier -> . CONST
-    (13) assignment_qualifier -> . MUT
-    (14) assignment -> . ID = expression
-    (15) assignment -> . assignment_qualifier ID = expression
-
-    )               reduce using rule 1 (empty -> .)
-    ,               reduce using rule 1 (empty -> .)
-    ID              shift and go to state 66
-    CONST           shift and go to state 9
-    MUT             shift and go to state 18
-
-    assignment_qualifier           shift and go to state 65
-    def_argument                   shift and go to state 64
-    assignment                     shift and go to state 67
-    def_argument_list              shift and go to state 72
-    empty                          shift and go to state 69
-
-state 60
-
-    (15) assignment -> assignment_qualifier ID = . expression
-    (30) expression -> . constant
-    (31) expression -> . expression + constant
-    (32) expression -> . expression - constant
-    (33) expression -> . expression * constant
-    (34) expression -> . expression / constant
-    (35) expression -> . expression ^ constant
-    (36) expression -> . expression % constant
-    (37) constant -> . NUMBER
-    (38) constant -> . STRING
-    (39) constant -> . function_call
-    (40) constant -> . ID
-    (41) constant -> . ( expression )
-    (42) function_call -> . ID ( argument_list )
-
-    NUMBER          shift and go to state 28
-    STRING          shift and go to state 12
-    ID              shift and go to state 41
-    (               shift and go to state 22
-
-    expression                     shift and go to state 73
-    function_call                  shift and go to state 17
-    constant                       shift and go to state 23
-
-state 61
-
-    (41) constant -> ( expression ) .
-
-    END             reduce using rule 41 (constant -> ( expression ) .)
-    +               reduce using rule 41 (constant -> ( expression ) .)
-    -               reduce using rule 41 (constant -> ( expression ) .)
-    *               reduce using rule 41 (constant -> ( expression ) .)
-    /               reduce using rule 41 (constant -> ( expression ) .)
-    ^               reduce using rule 41 (constant -> ( expression ) .)
-    %               reduce using rule 41 (constant -> ( expression ) .)
-    )               reduce using rule 41 (constant -> ( expression ) .)
-    ,               reduce using rule 41 (constant -> ( expression ) .)
-    RETURN          reduce using rule 41 (constant -> ( expression ) .)
-                    reduce using rule 41 (constant -> ( expression ) .)
-    ID              reduce using rule 41 (constant -> ( expression ) .)
-    DEF             reduce using rule 41 (constant -> ( expression ) .)
-    DEFP            reduce using rule 41 (constant -> ( expression ) .)
-    DO              reduce using rule 41 (constant -> ( expression ) .)
-    CONST           reduce using rule 41 (constant -> ( expression ) .)
-    MUT             reduce using rule 41 (constant -> ( expression ) .)
-    NUMBER          reduce using rule 41 (constant -> ( expression ) .)
-    STRING          reduce using rule 41 (constant -> ( expression ) .)
-    (               reduce using rule 41 (constant -> ( expression ) .)
-
-
-state 62
-
-    (28) do_block -> DO statements do_return expression . END
+    (43) argument -> expression .
     (31) expression -> expression . + constant
     (32) expression -> expression . - constant
     (33) expression -> expression . * constant
@@ -1341,16 +1061,42 @@ state 62
     (35) expression -> expression . ^ constant
     (36) expression -> expression . % constant
 
-    END             shift and go to state 74
-    +               shift and go to state 33
-    -               shift and go to state 38
-    *               shift and go to state 36
-    /               shift and go to state 35
-    ^               shift and go to state 37
-    %               shift and go to state 34
+    )               reduce using rule 43 (argument -> expression .)
+    ,               reduce using rule 43 (argument -> expression .)
+    +               shift and go to state 37
+    -               shift and go to state 39
+    *               shift and go to state 38
+    /               shift and go to state 41
+    ^               shift and go to state 36
+    %               shift and go to state 40
 
 
-state 63
+state 50
+
+    (44) argument_list -> empty .
+
+    )               reduce using rule 44 (argument_list -> empty .)
+    ,               reduce using rule 44 (argument_list -> empty .)
+
+
+state 51
+
+    (42) function_call -> ID ( argument_list . )
+    (46) argument_list -> argument_list . , argument
+
+    )               shift and go to state 71
+    ,               shift and go to state 70
+
+
+state 52
+
+    (45) argument_list -> argument .
+
+    )               reduce using rule 45 (argument_list -> argument .)
+    ,               reduce using rule 45 (argument_list -> argument .)
+
+
+state 53
 
     (29) do_block -> DO do_return expression END .
 
@@ -1370,33 +1116,271 @@ state 63
     $end            reduce using rule 29 (do_block -> DO do_return expression END .)
 
 
+state 54
+
+    (16) function_definition -> DEF ID ( . def_argument_list ) do_block
+    (21) def_argument_list -> . empty
+    (22) def_argument_list -> . def_argument
+    (23) def_argument_list -> . def_argument_list , def_argument
+    (1) empty -> .
+    (18) def_argument -> . ID
+    (19) def_argument -> . assignment_qualifier ID
+    (20) def_argument -> . assignment
+    (12) assignment_qualifier -> . CONST
+    (13) assignment_qualifier -> . MUT
+    (14) assignment -> . ID = expression
+    (15) assignment -> . assignment_qualifier ID = expression
+
+    )               reduce using rule 1 (empty -> .)
+    ,               reduce using rule 1 (empty -> .)
+    ID              shift and go to state 64
+    CONST           shift and go to state 25
+    MUT             shift and go to state 26
+
+    empty                          shift and go to state 68
+    assignment                     shift and go to state 65
+    def_argument_list              shift and go to state 72
+    assignment_qualifier           shift and go to state 66
+    def_argument                   shift and go to state 67
+
+state 55
+
+    (35) expression -> expression ^ constant .
+
+    +               reduce using rule 35 (expression -> expression ^ constant .)
+    -               reduce using rule 35 (expression -> expression ^ constant .)
+    *               reduce using rule 35 (expression -> expression ^ constant .)
+    /               reduce using rule 35 (expression -> expression ^ constant .)
+    ^               reduce using rule 35 (expression -> expression ^ constant .)
+    %               reduce using rule 35 (expression -> expression ^ constant .)
+    END             reduce using rule 35 (expression -> expression ^ constant .)
+    RETURN          reduce using rule 35 (expression -> expression ^ constant .)
+                    reduce using rule 35 (expression -> expression ^ constant .)
+    ID              reduce using rule 35 (expression -> expression ^ constant .)
+    DEF             reduce using rule 35 (expression -> expression ^ constant .)
+    DEFP            reduce using rule 35 (expression -> expression ^ constant .)
+    DO              reduce using rule 35 (expression -> expression ^ constant .)
+    CONST           reduce using rule 35 (expression -> expression ^ constant .)
+    MUT             reduce using rule 35 (expression -> expression ^ constant .)
+    NUMBER          reduce using rule 35 (expression -> expression ^ constant .)
+    STRING          reduce using rule 35 (expression -> expression ^ constant .)
+    (               reduce using rule 35 (expression -> expression ^ constant .)
+    )               reduce using rule 35 (expression -> expression ^ constant .)
+    ,               reduce using rule 35 (expression -> expression ^ constant .)
+
+
+state 56
+
+    (31) expression -> expression + constant .
+
+    +               reduce using rule 31 (expression -> expression + constant .)
+    -               reduce using rule 31 (expression -> expression + constant .)
+    *               reduce using rule 31 (expression -> expression + constant .)
+    /               reduce using rule 31 (expression -> expression + constant .)
+    ^               reduce using rule 31 (expression -> expression + constant .)
+    %               reduce using rule 31 (expression -> expression + constant .)
+    END             reduce using rule 31 (expression -> expression + constant .)
+    RETURN          reduce using rule 31 (expression -> expression + constant .)
+                    reduce using rule 31 (expression -> expression + constant .)
+    ID              reduce using rule 31 (expression -> expression + constant .)
+    DEF             reduce using rule 31 (expression -> expression + constant .)
+    DEFP            reduce using rule 31 (expression -> expression + constant .)
+    DO              reduce using rule 31 (expression -> expression + constant .)
+    CONST           reduce using rule 31 (expression -> expression + constant .)
+    MUT             reduce using rule 31 (expression -> expression + constant .)
+    NUMBER          reduce using rule 31 (expression -> expression + constant .)
+    STRING          reduce using rule 31 (expression -> expression + constant .)
+    (               reduce using rule 31 (expression -> expression + constant .)
+    )               reduce using rule 31 (expression -> expression + constant .)
+    ,               reduce using rule 31 (expression -> expression + constant .)
+
+
+state 57
+
+    (33) expression -> expression * constant .
+
+    +               reduce using rule 33 (expression -> expression * constant .)
+    -               reduce using rule 33 (expression -> expression * constant .)
+    *               reduce using rule 33 (expression -> expression * constant .)
+    /               reduce using rule 33 (expression -> expression * constant .)
+    ^               reduce using rule 33 (expression -> expression * constant .)
+    %               reduce using rule 33 (expression -> expression * constant .)
+    END             reduce using rule 33 (expression -> expression * constant .)
+    RETURN          reduce using rule 33 (expression -> expression * constant .)
+                    reduce using rule 33 (expression -> expression * constant .)
+    ID              reduce using rule 33 (expression -> expression * constant .)
+    DEF             reduce using rule 33 (expression -> expression * constant .)
+    DEFP            reduce using rule 33 (expression -> expression * constant .)
+    DO              reduce using rule 33 (expression -> expression * constant .)
+    CONST           reduce using rule 33 (expression -> expression * constant .)
+    MUT             reduce using rule 33 (expression -> expression * constant .)
+    NUMBER          reduce using rule 33 (expression -> expression * constant .)
+    STRING          reduce using rule 33 (expression -> expression * constant .)
+    (               reduce using rule 33 (expression -> expression * constant .)
+    )               reduce using rule 33 (expression -> expression * constant .)
+    ,               reduce using rule 33 (expression -> expression * constant .)
+
+
+state 58
+
+    (32) expression -> expression - constant .
+
+    +               reduce using rule 32 (expression -> expression - constant .)
+    -               reduce using rule 32 (expression -> expression - constant .)
+    *               reduce using rule 32 (expression -> expression - constant .)
+    /               reduce using rule 32 (expression -> expression - constant .)
+    ^               reduce using rule 32 (expression -> expression - constant .)
+    %               reduce using rule 32 (expression -> expression - constant .)
+    END             reduce using rule 32 (expression -> expression - constant .)
+    RETURN          reduce using rule 32 (expression -> expression - constant .)
+                    reduce using rule 32 (expression -> expression - constant .)
+    ID              reduce using rule 32 (expression -> expression - constant .)
+    DEF             reduce using rule 32 (expression -> expression - constant .)
+    DEFP            reduce using rule 32 (expression -> expression - constant .)
+    DO              reduce using rule 32 (expression -> expression - constant .)
+    CONST           reduce using rule 32 (expression -> expression - constant .)
+    MUT             reduce using rule 32 (expression -> expression - constant .)
+    NUMBER          reduce using rule 32 (expression -> expression - constant .)
+    STRING          reduce using rule 32 (expression -> expression - constant .)
+    (               reduce using rule 32 (expression -> expression - constant .)
+    )               reduce using rule 32 (expression -> expression - constant .)
+    ,               reduce using rule 32 (expression -> expression - constant .)
+
+
+state 59
+
+    (36) expression -> expression % constant .
+
+    +               reduce using rule 36 (expression -> expression % constant .)
+    -               reduce using rule 36 (expression -> expression % constant .)
+    *               reduce using rule 36 (expression -> expression % constant .)
+    /               reduce using rule 36 (expression -> expression % constant .)
+    ^               reduce using rule 36 (expression -> expression % constant .)
+    %               reduce using rule 36 (expression -> expression % constant .)
+    END             reduce using rule 36 (expression -> expression % constant .)
+    RETURN          reduce using rule 36 (expression -> expression % constant .)
+                    reduce using rule 36 (expression -> expression % constant .)
+    ID              reduce using rule 36 (expression -> expression % constant .)
+    DEF             reduce using rule 36 (expression -> expression % constant .)
+    DEFP            reduce using rule 36 (expression -> expression % constant .)
+    DO              reduce using rule 36 (expression -> expression % constant .)
+    CONST           reduce using rule 36 (expression -> expression % constant .)
+    MUT             reduce using rule 36 (expression -> expression % constant .)
+    NUMBER          reduce using rule 36 (expression -> expression % constant .)
+    STRING          reduce using rule 36 (expression -> expression % constant .)
+    (               reduce using rule 36 (expression -> expression % constant .)
+    )               reduce using rule 36 (expression -> expression % constant .)
+    ,               reduce using rule 36 (expression -> expression % constant .)
+
+
+state 60
+
+    (34) expression -> expression / constant .
+
+    +               reduce using rule 34 (expression -> expression / constant .)
+    -               reduce using rule 34 (expression -> expression / constant .)
+    *               reduce using rule 34 (expression -> expression / constant .)
+    /               reduce using rule 34 (expression -> expression / constant .)
+    ^               reduce using rule 34 (expression -> expression / constant .)
+    %               reduce using rule 34 (expression -> expression / constant .)
+    END             reduce using rule 34 (expression -> expression / constant .)
+    RETURN          reduce using rule 34 (expression -> expression / constant .)
+                    reduce using rule 34 (expression -> expression / constant .)
+    ID              reduce using rule 34 (expression -> expression / constant .)
+    DEF             reduce using rule 34 (expression -> expression / constant .)
+    DEFP            reduce using rule 34 (expression -> expression / constant .)
+    DO              reduce using rule 34 (expression -> expression / constant .)
+    CONST           reduce using rule 34 (expression -> expression / constant .)
+    MUT             reduce using rule 34 (expression -> expression / constant .)
+    NUMBER          reduce using rule 34 (expression -> expression / constant .)
+    STRING          reduce using rule 34 (expression -> expression / constant .)
+    (               reduce using rule 34 (expression -> expression / constant .)
+    )               reduce using rule 34 (expression -> expression / constant .)
+    ,               reduce using rule 34 (expression -> expression / constant .)
+
+
+state 61
+
+    (15) assignment -> assignment_qualifier ID = . expression
+    (30) expression -> . constant
+    (31) expression -> . expression + constant
+    (32) expression -> . expression - constant
+    (33) expression -> . expression * constant
+    (34) expression -> . expression / constant
+    (35) expression -> . expression ^ constant
+    (36) expression -> . expression % constant
+    (37) constant -> . NUMBER
+    (38) constant -> . STRING
+    (39) constant -> . function_call
+    (40) constant -> . ID
+    (41) constant -> . ( expression )
+    (42) function_call -> . ID ( argument_list )
+
+    NUMBER          shift and go to state 16
+    STRING          shift and go to state 19
+    ID              shift and go to state 33
+    (               shift and go to state 28
+
+    constant                       shift and go to state 10
+    expression                     shift and go to state 73
+    function_call                  shift and go to state 20
+
+state 62
+
+    (28) do_block -> DO statements do_return expression . END
+    (31) expression -> expression . + constant
+    (32) expression -> expression . - constant
+    (33) expression -> expression . * constant
+    (34) expression -> expression . / constant
+    (35) expression -> expression . ^ constant
+    (36) expression -> expression . % constant
+
+    END             shift and go to state 74
+    +               shift and go to state 37
+    -               shift and go to state 39
+    *               shift and go to state 38
+    /               shift and go to state 41
+    ^               shift and go to state 36
+    %               shift and go to state 40
+
+
+state 63
+
+    (41) constant -> ( expression ) .
+
+    END             reduce using rule 41 (constant -> ( expression ) .)
+    +               reduce using rule 41 (constant -> ( expression ) .)
+    -               reduce using rule 41 (constant -> ( expression ) .)
+    *               reduce using rule 41 (constant -> ( expression ) .)
+    /               reduce using rule 41 (constant -> ( expression ) .)
+    ^               reduce using rule 41 (constant -> ( expression ) .)
+    %               reduce using rule 41 (constant -> ( expression ) .)
+    RETURN          reduce using rule 41 (constant -> ( expression ) .)
+                    reduce using rule 41 (constant -> ( expression ) .)
+    ID              reduce using rule 41 (constant -> ( expression ) .)
+    DEF             reduce using rule 41 (constant -> ( expression ) .)
+    DEFP            reduce using rule 41 (constant -> ( expression ) .)
+    DO              reduce using rule 41 (constant -> ( expression ) .)
+    CONST           reduce using rule 41 (constant -> ( expression ) .)
+    MUT             reduce using rule 41 (constant -> ( expression ) .)
+    NUMBER          reduce using rule 41 (constant -> ( expression ) .)
+    STRING          reduce using rule 41 (constant -> ( expression ) .)
+    (               reduce using rule 41 (constant -> ( expression ) .)
+    )               reduce using rule 41 (constant -> ( expression ) .)
+    ,               reduce using rule 41 (constant -> ( expression ) .)
+
+
 state 64
-
-    (22) def_argument_list -> def_argument .
-
-    )               reduce using rule 22 (def_argument_list -> def_argument .)
-    ,               reduce using rule 22 (def_argument_list -> def_argument .)
-
-
-state 65
-
-    (19) def_argument -> assignment_qualifier . ID
-    (15) assignment -> assignment_qualifier . ID = expression
-
-    ID              shift and go to state 75
-
-
-state 66
 
     (18) def_argument -> ID .
     (14) assignment -> ID . = expression
 
     )               reduce using rule 18 (def_argument -> ID .)
     ,               reduce using rule 18 (def_argument -> ID .)
-    =               shift and go to state 32
+    =               shift and go to state 31
 
 
-state 67
+state 65
 
     (20) def_argument -> assignment .
 
@@ -1404,21 +1388,37 @@ state 67
     ,               reduce using rule 20 (def_argument -> assignment .)
 
 
+state 66
+
+    (19) def_argument -> assignment_qualifier . ID
+    (15) assignment -> assignment_qualifier . ID = expression
+
+    ID              shift and go to state 75
+
+
+state 67
+
+    (22) def_argument_list -> def_argument .
+
+    )               reduce using rule 22 (def_argument_list -> def_argument .)
+    ,               reduce using rule 22 (def_argument_list -> def_argument .)
+
+
 state 68
-
-    (16) function_definition -> DEF ID ( def_argument_list . ) do_block
-    (23) def_argument_list -> def_argument_list . , def_argument
-
-    )               shift and go to state 77
-    ,               shift and go to state 76
-
-
-state 69
 
     (21) def_argument_list -> empty .
 
     )               reduce using rule 21 (def_argument_list -> empty .)
     ,               reduce using rule 21 (def_argument_list -> empty .)
+
+
+state 69
+
+    (17) private_function_definition -> DEFP ID ( def_argument_list . ) do_block
+    (23) def_argument_list -> def_argument_list . , def_argument
+
+    )               shift and go to state 77
+    ,               shift and go to state 76
 
 
 state 70
@@ -1439,15 +1439,15 @@ state 70
     (41) constant -> . ( expression )
     (42) function_call -> . ID ( argument_list )
 
-    NUMBER          shift and go to state 28
-    STRING          shift and go to state 12
-    ID              shift and go to state 41
-    (               shift and go to state 22
+    NUMBER          shift and go to state 16
+    STRING          shift and go to state 19
+    ID              shift and go to state 33
+    (               shift and go to state 28
 
-    expression                     shift and go to state 50
-    constant                       shift and go to state 23
     argument                       shift and go to state 78
-    function_call                  shift and go to state 17
+    expression                     shift and go to state 49
+    constant                       shift and go to state 10
+    function_call                  shift and go to state 20
 
 state 71
 
@@ -1477,7 +1477,7 @@ state 71
 
 state 72
 
-    (17) private_function_definition -> DEFP ID ( def_argument_list . ) do_block
+    (16) function_definition -> DEF ID ( def_argument_list . ) do_block
     (23) def_argument_list -> def_argument_list . , def_argument
 
     )               shift and go to state 79
@@ -1508,12 +1508,12 @@ state 73
     NUMBER          reduce using rule 15 (assignment -> assignment_qualifier ID = expression .)
     STRING          reduce using rule 15 (assignment -> assignment_qualifier ID = expression .)
     (               reduce using rule 15 (assignment -> assignment_qualifier ID = expression .)
-    +               shift and go to state 33
-    -               shift and go to state 38
-    *               shift and go to state 36
-    /               shift and go to state 35
-    ^               shift and go to state 37
-    %               shift and go to state 34
+    +               shift and go to state 37
+    -               shift and go to state 39
+    *               shift and go to state 38
+    /               shift and go to state 41
+    ^               shift and go to state 36
+    %               shift and go to state 40
 
 
 state 74
@@ -1543,7 +1543,7 @@ state 75
 
     )               reduce using rule 19 (def_argument -> assignment_qualifier ID .)
     ,               reduce using rule 19 (def_argument -> assignment_qualifier ID .)
-    =               shift and go to state 60
+    =               shift and go to state 61
 
 
 state 76
@@ -1557,17 +1557,17 @@ state 76
     (14) assignment -> . ID = expression
     (15) assignment -> . assignment_qualifier ID = expression
 
-    ID              shift and go to state 66
-    CONST           shift and go to state 9
-    MUT             shift and go to state 18
+    ID              shift and go to state 64
+    CONST           shift and go to state 25
+    MUT             shift and go to state 26
 
-    assignment                     shift and go to state 67
+    assignment_qualifier           shift and go to state 66
+    assignment                     shift and go to state 65
     def_argument                   shift and go to state 80
-    assignment_qualifier           shift and go to state 65
 
 state 77
 
-    (16) function_definition -> DEF ID ( def_argument_list ) . do_block
+    (17) private_function_definition -> DEFP ID ( def_argument_list ) . do_block
     (24) do_block -> . DO END
     (27) do_block -> . DO statements END
     (28) do_block -> . DO statements do_return expression END
@@ -1587,7 +1587,7 @@ state 78
 
 state 79
 
-    (17) private_function_definition -> DEFP ID ( def_argument_list ) . do_block
+    (16) function_definition -> DEF ID ( def_argument_list ) . do_block
     (24) do_block -> . DO END
     (27) do_block -> . DO statements END
     (28) do_block -> . DO statements do_return expression END
@@ -1607,24 +1607,6 @@ state 80
 
 state 81
 
-    (16) function_definition -> DEF ID ( def_argument_list ) do_block .
-
-    END             reduce using rule 16 (function_definition -> DEF ID ( def_argument_list ) do_block .)
-    RETURN          reduce using rule 16 (function_definition -> DEF ID ( def_argument_list ) do_block .)
-                    reduce using rule 16 (function_definition -> DEF ID ( def_argument_list ) do_block .)
-    ID              reduce using rule 16 (function_definition -> DEF ID ( def_argument_list ) do_block .)
-    DEF             reduce using rule 16 (function_definition -> DEF ID ( def_argument_list ) do_block .)
-    DEFP            reduce using rule 16 (function_definition -> DEF ID ( def_argument_list ) do_block .)
-    DO              reduce using rule 16 (function_definition -> DEF ID ( def_argument_list ) do_block .)
-    CONST           reduce using rule 16 (function_definition -> DEF ID ( def_argument_list ) do_block .)
-    MUT             reduce using rule 16 (function_definition -> DEF ID ( def_argument_list ) do_block .)
-    NUMBER          reduce using rule 16 (function_definition -> DEF ID ( def_argument_list ) do_block .)
-    STRING          reduce using rule 16 (function_definition -> DEF ID ( def_argument_list ) do_block .)
-    (               reduce using rule 16 (function_definition -> DEF ID ( def_argument_list ) do_block .)
-
-
-state 82
-
     (17) private_function_definition -> DEFP ID ( def_argument_list ) do_block .
 
     END             reduce using rule 17 (private_function_definition -> DEFP ID ( def_argument_list ) do_block .)
@@ -1640,8 +1622,26 @@ state 82
     STRING          reduce using rule 17 (private_function_definition -> DEFP ID ( def_argument_list ) do_block .)
     (               reduce using rule 17 (private_function_definition -> DEFP ID ( def_argument_list ) do_block .)
 
+
+state 82
+
+    (16) function_definition -> DEF ID ( def_argument_list ) do_block .
+
+    END             reduce using rule 16 (function_definition -> DEF ID ( def_argument_list ) do_block .)
+    RETURN          reduce using rule 16 (function_definition -> DEF ID ( def_argument_list ) do_block .)
+                    reduce using rule 16 (function_definition -> DEF ID ( def_argument_list ) do_block .)
+    ID              reduce using rule 16 (function_definition -> DEF ID ( def_argument_list ) do_block .)
+    DEF             reduce using rule 16 (function_definition -> DEF ID ( def_argument_list ) do_block .)
+    DEFP            reduce using rule 16 (function_definition -> DEF ID ( def_argument_list ) do_block .)
+    DO              reduce using rule 16 (function_definition -> DEF ID ( def_argument_list ) do_block .)
+    CONST           reduce using rule 16 (function_definition -> DEF ID ( def_argument_list ) do_block .)
+    MUT             reduce using rule 16 (function_definition -> DEF ID ( def_argument_list ) do_block .)
+    NUMBER          reduce using rule 16 (function_definition -> DEF ID ( def_argument_list ) do_block .)
+    STRING          reduce using rule 16 (function_definition -> DEF ID ( def_argument_list ) do_block .)
+    (               reduce using rule 16 (function_definition -> DEF ID ( def_argument_list ) do_block .)
+
 WARNING: 
 WARNING: Conflicts:
 WARNING: 
-WARNING: shift/reduce conflict for ( in state 14 resolved as shift
-WARNING: shift/reduce conflict for ( in state 41 resolved as shift
+WARNING: shift/reduce conflict for ( in state 13 resolved as shift
+WARNING: shift/reduce conflict for ( in state 33 resolved as shift
