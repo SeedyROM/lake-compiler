@@ -8,12 +8,16 @@ reserved = {
     'DEFMODULE': 'defmodule',
     'DO': 'do',
     'END': 'end',
-    'RETURN': 'return'
+    'RETURN': 'return',
+    'IF': 'if',
+    'ELSE_IF': 'else if',
+    'ELSE': 'else',
+    # 'FOR': 'for',
+    # 'WHILE': 'while',
+    'AND': 'and',
+    'OR': 'or',
 
     # 'DEFSTRUCT': 'defstruct',
-    # 'IF': 'if',
-    # 'WHILE': 'while',
-    # 'FOR': 'for',
 }
 
 for k, v in reserved.items():
@@ -23,12 +27,26 @@ tokens = [
     'ID',
     'STRING',
     'NUMBER',
+    'EQUAL',
+    'NOT_EQUAL',
+    'GREATER_THAN',
+    'LESS_THAN',
+    'EQ_GREATER_THAN',
+    'EQ_LESS_THAN',
 ] + list(reserved.keys())
 
 literals = ['+', '-', '=', '/',
             '*', ':', '{', '}',
             '(', ')', ';', '^',
-            ',']
+            ',', '!', '>', '<']
+
+
+t_EQUAL = r'=='
+t_NOT_EQUAL = r'!='
+t_GREATER_THAN = r'>'
+t_LESS_THAN = r'<'
+t_EQ_GREATER_THAN = r'>='
+t_EQ_LESS_THAN = r'<='
 
 t_NUMBER  = r'(\-?)\d+(\.\d{1,2})?'
 t_ignore  = ' \t'
