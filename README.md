@@ -1,5 +1,4 @@
 # lake-compiler
-***
 
 ## What is it? 👿
 It's a simple attempt at making a compiler, I'm only at the parsing stage though. 💕
